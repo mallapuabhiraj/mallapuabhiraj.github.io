@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abhi Raju Mallapu — ML & Data Science</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+/* ── Design tokens — dark theme ── */
+:root {
+  --bg:       #0C0C0F;
+  --bg2:      #111116;
+  --bg3:      #16161C;
+  --card:     #1A1A22;
+  --border:   #2A2A36;
+  --border2:  #333340;
+
+  --ink:      #F0F0F5;
+  --ink2:     #A0A0B8;
+  --ink3:     #60607A;
+
+  --accent:   #4F7EFF;
+  --accent-d: #2E57D6;
+  --amber:    #F5A623;
+  --rose:     #FF5F7E;
+  --green:    #3DDC84;
+
+  --ff-head: 'Playfair Display', Georgia, serif;
+  --ff-body: 'DM Sans', system-ui, sans-serif;
+  --ff-mono: 'DM Mono', monospace;
+
+  --radius:   6px;
+  --radius-lg:12px;
+  --shadow:   0 2px 8px rgba(0,0,0,0.4);
+  --shadow-lg:0 12px 48px rgba(0,0,0,0.6);
+  --glow:     0 0 40px rgba(79,126,255,0.12);
+}
+
+body {
+  font-family: var(--ff-body);
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ── Noise texture overlay ── */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  opacity: 0.4;
+}
+
+/* ══════════════════════════════════════════
+   NAV
+══════════════════════════════════════════ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  height: 64px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 3rem;
+  background: rgba(12,12,15,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  transition: all 0.3s;
+}
+nav.scrolled { border-bottom-color: var(--border2); box-shadow: 0 4px 30px rgba(0,0,0,0.5); }
+
+.nav-logo {
+  display: flex; align-items: center; gap: 0.75rem;
+  text-decoration: none;
+}
+.nav-logo-mark {
+  width: 36px; height: 36px; border-radius: 8px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-d));
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--ff-head); font-size: 1rem; font-weight: 900; color: white;
+}
+.nav-logo-text {
+  font-family: var(--ff-head); font-size: 1rem; font-weight: 700;
+  color: var(--ink); letter-spacing: -0.02em;
+}
+.nav-logo-text span { color: var(--accent); }
+
+.nav-center { display: flex; gap: 0.25rem; }
+.nav-link {
+  font-size: 0.82rem; font-weight: 500;
+  color: var(--ink2); text-decoration: none;
+  padding: 0.4rem 0.9rem; border-radius: var(--radius);
+  letter-spacing: 0.02em; transition: all 0.2s;
+}
+.nav-link:hover { color: var(--ink); background: var(--bg3); }
+.nav-link.active { color: var(--accent); }
+
+.nav-right { display: flex; align-items: center; gap: 0.75rem; }
+.nav-badge {
+  font-family: var(--ff-mono); font-size: 0.65rem;
+  padding: 0.25rem 0.6rem; border-radius: 20px;
+  background: rgba(61,220,132,0.12);
+  border: 1px solid rgba(61,220,132,0.25);
+  color: var(--green);
+  letter-spacing: 0.08em;
+  display: flex; align-items: center; gap: 0.4rem;
+}
+.nav-badge::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--green);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.nav-cta {
+  font-size: 0.82rem; font-weight: 600;
+  padding: 0.45rem 1.1rem; border-radius: var(--radius);
+  background: var(--accent); color: white; text-decoration: none;
+  transition: all 0.2s;
+}
+.nav-cta:hover { background: var(--accent-d); transform: translateY(-1px); }
+
+/* Hamburger */
+.nav-hamburger {
+  display: none; flex-direction: column; gap: 5px;
+  cursor: pointer; padding: 4px; background: none; border: none;
+}
+.nav-hamburger span {
+  display: block; width: 22px; height: 2px;
+  background: var(--ink2); border-radius: 2px; transition: all 0.3s;
+}
+.mobile-menu {
+  display: none; position: fixed; top: 64px; left: 0; right: 0;
+  background: var(--bg2); border-bottom: 1px solid var(--border);
+  padding: 1rem 2rem; flex-direction: column; gap: 0.5rem; z-index: 199;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu .nav-link { font-size: 0.95rem; padding: 0.7rem 0; }
+
+/* ══════════════════════════════════════════
+   HERO
+══════════════════════════════════════════ */
+.hero {
+  min-height: 100vh;
+  padding: 64px 0 0;
+  display: grid; grid-template-columns: 1fr 1fr;
+  position: relative; overflow: hidden;
+}
+
+/* Glow blobs */
+.hero::before {
+  content: '';
+  position: absolute; top: 20%; left: 5%;
+  width: 500px; height: 500px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(79,126,255,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute; bottom: 10%; right: 5%;
+  width: 400px; height: 400px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,95,126,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-left {
+  padding: 6rem 4rem 4rem 6rem;
+  display: flex; flex-direction: column; justify-content: center;
+  position: relative; z-index: 1;
+}
+.hero-eyebrow {
+  font-family: var(--ff-mono); font-size: 0.72rem;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 1.5rem;
+  display: flex; align-items: center; gap: 0.75rem;
+}
+.hero-eyebrow::before {
+  content: ''; width: 2rem; height: 1px; background: var(--accent);
+}
+
+.hero-greeting {
+  font-family: var(--ff-body); font-size: 1rem;
+  color: var(--ink2); margin-bottom: 0.5rem; font-weight: 300;
+}
+
+.hero-name {
+  font-family: var(--ff-head);
+  font-size: clamp(2.8rem, 4.5vw, 4.5rem);
+  font-weight: 900; line-height: 1.05;
+  letter-spacing: -0.03em; color: var(--ink);
+  margin-bottom: 0.4rem;
+}
+.hero-name .accent { color: var(--accent); }
+.hero-name .last { color: var(--ink2); font-weight: 700; }
+
+.hero-title {
+  font-family: var(--ff-mono); font-size: 0.85rem;
+  color: var(--ink3); margin-bottom: 1.75rem;
+  letter-spacing: 0.06em;
+}
+
+.hero-desc {
+  font-size: 1rem; color: var(--ink2);
+  max-width: 46ch; line-height: 1.8; margin-bottom: 2.5rem;
+}
+.hero-desc strong { color: var(--ink); font-weight: 500; }
+
+.hero-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 3rem; }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.7rem 1.6rem; border-radius: var(--radius);
+  font-family: var(--ff-body); font-size: 0.85rem; font-weight: 600;
+  text-decoration: none; transition: all 0.2s; cursor: pointer; border: none;
+}
+.btn-primary { background: var(--accent); color: white; }
+.btn-primary:hover { background: var(--accent-d); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(79,126,255,0.3); }
+.btn-outline { background: transparent; color: var(--ink2); border: 1px solid var(--border2); }
+.btn-outline:hover { color: var(--ink); border-color: var(--ink3); transform: translateY(-2px); }
+.btn-ghost { background: var(--bg3); color: var(--ink2); }
+.btn-ghost:hover { color: var(--ink); background: var(--border); }
+
+.hero-social { display: flex; gap: 1rem; }
+.social-link {
+  display: flex; align-items: center; gap: 0.4rem;
+  font-family: var(--ff-mono); font-size: 0.72rem;
+  color: var(--ink3); text-decoration: none;
+  letter-spacing: 0.06em; transition: color 0.2s;
+}
+.social-link:hover { color: var(--accent); }
+.social-link svg { width: 14px; height: 14px; }
+
+/* Hero right — status cards */
+.hero-right {
+  padding: 6rem 6rem 4rem 4rem;
+  display: flex; flex-direction: column; justify-content: center; gap: 1rem;
+  position: relative; z-index: 1;
+  border-left: 1px solid var(--border);
+}
+
+.status-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.status-card:hover { border-color: var(--border2); box-shadow: var(--shadow); }
+
+.status-card-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 0.75rem;
+}
+.status-card-title {
+  font-family: var(--ff-mono); font-size: 0.68rem;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink3);
+}
+.status-dot {
+  width: 8px; height: 8px; border-radius: 50%; background: var(--green);
+  box-shadow: 0 0 8px var(--green);
+}
+
+.status-main {
+  font-family: var(--ff-head); font-size: 1.1rem; font-weight: 700;
+  color: var(--ink); margin-bottom: 0.3rem;
+}
+.status-sub { font-size: 0.82rem; color: var(--ink2); }
+
+.skill-cloud { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.75rem; }
+.skill-pill {
+  font-family: var(--ff-mono); font-size: 0.65rem;
+  padding: 0.25rem 0.6rem; border-radius: 20px;
+  border: 1px solid var(--border2); color: var(--ink3);
+  transition: all 0.2s;
+}
+.skill-pill:hover { border-color: var(--accent); color: var(--accent); }
+.skill-pill.hi { border-color: rgba(79,126,255,0.4); color: var(--accent); background: rgba(79,126,255,0.08); }
+
+/* ══════════════════════════════════════════
+   SECTIONS
+══════════════════════════════════════════ */
+section { padding: 6rem 6rem; position: relative; z-index: 1; }
+section.alt { background: var(--bg2); }
+
+.section-header {
+  display: flex; align-items: baseline; gap: 1.25rem;
+  margin-bottom: 3.5rem; padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--border);
+}
+.section-num {
+  font-family: var(--ff-mono); font-size: 0.7rem;
+  color: var(--accent); letter-spacing: 0.12em;
+}
+.section-title {
+  font-family: var(--ff-head); font-size: 2.2rem;
+  font-weight: 700; letter-spacing: -0.02em; color: var(--ink);
+}
+.section-sub {
+  margin-left: auto; font-size: 0.82rem; color: var(--ink3);
+  font-family: var(--ff-mono);
+}
+
+/* ══════════════════════════════════════════
+   PROJECT CARDS
+══════════════════════════════════════════ */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 1.25rem;
+}
+
+.project-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  display: flex; flex-direction: column;
+  transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+  position: relative;
+}
+.project-card::before {
+  content: ''; position: absolute; inset: 0; border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, transparent 60%, rgba(79,126,255,0.03));
+  pointer-events: none;
+}
+.project-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--border2);
+  box-shadow: var(--shadow-lg), var(--glow);
+}
+
+/* Featured — full width */
+.project-card.featured { grid-column: 1 / -1; display: grid; grid-template-columns: 3fr 2fr; }
+.featured-findings-panel {
+  background: var(--bg2);
+  border-left: 1px solid var(--border);
+  padding: 2rem;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.findings-label {
+  font-family: var(--ff-mono); font-size: 0.65rem;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--ink3); margin-bottom: 1.25rem;
+}
+.finding-item {
+  display: flex; gap: 0.75rem; margin-bottom: 1rem;
+  font-size: 0.83rem; color: var(--ink2); line-height: 1.65;
+}
+.finding-tag {
+  font-family: var(--ff-mono); font-size: 0.6rem;
+  color: var(--rose); border: 1px solid rgba(255,95,126,0.3);
+  background: rgba(255,95,126,0.08);
+  padding: 0.15rem 0.4rem; border-radius: 3px;
+  flex-shrink: 0; align-self: flex-start; margin-top: 0.2rem;
+  letter-spacing: 0.06em;
+}
+
+.card-top {
+  padding: 1.5rem 1.5rem 0;
+  display: flex; justify-content: space-between; align-items: flex-start;
+}
+.card-icon {
+  width: 48px; height: 48px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
+  flex-shrink: 0;
+}
+.card-badges { display: flex; gap: 0.4rem; flex-wrap: wrap; justify-content: flex-end; }
+.badge {
+  font-family: var(--ff-mono); font-size: 0.62rem;
+  padding: 0.22rem 0.55rem; border-radius: 3px;
+  letter-spacing: 0.08em; text-transform: uppercase;
+}
+.badge-live  { background: rgba(61,220,132,0.12); border: 1px solid rgba(61,220,132,0.3); color: var(--green); }
+.badge-ml    { background: rgba(79,126,255,0.1);  border: 1px solid rgba(79,126,255,0.25); color: var(--accent); }
+.badge-iot   { background: rgba(245,166,35,0.1);  border: 1px solid rgba(245,166,35,0.25); color: var(--amber); }
+.badge-hc    { background: rgba(255,95,126,0.1);  border: 1px solid rgba(255,95,126,0.25); color: var(--rose); }
+
+.card-body { padding: 1.25rem 1.5rem; flex: 1; }
+.card-title {
+  font-family: var(--ff-head); font-size: 1.25rem; font-weight: 700;
+  color: var(--ink); margin-bottom: 0.6rem; letter-spacing: -0.01em;
+}
+.card-desc {
+  font-size: 0.87rem; color: var(--ink2); line-height: 1.75; margin-bottom: 1.1rem;
+}
+
+.card-metrics { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1.1rem; }
+.metric-row {
+  display: flex; align-items: center; gap: 0.6rem;
+  font-family: var(--ff-mono); font-size: 0.72rem;
+}
+.metric-key { color: var(--ink3); }
+.metric-val { color: var(--accent); font-weight: 500; }
+
+.card-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.card-tag {
+  font-family: var(--ff-mono); font-size: 0.63rem;
+  padding: 0.2rem 0.5rem; background: var(--bg3);
+  border: 1px solid var(--border); border-radius: 3px; color: var(--ink3);
+}
+
+.card-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--border);
+  display: flex; gap: 0.75rem; align-items: center;
+  background: var(--bg2);
+}
+.card-link {
+  display: flex; align-items: center; gap: 0.35rem;
+  font-size: 0.78rem; font-weight: 500;
+  color: var(--ink3); text-decoration: none; transition: color 0.2s;
+}
+.card-link:hover { color: var(--ink); }
+.card-link.primary { color: var(--accent); font-weight: 600; }
+.card-link.primary:hover { color: #7FA3FF; }
+.card-link svg { width: 13px; height: 13px; }
+.card-link-sep { color: var(--border2); font-size: 0.7rem; }
+
+/* ══════════════════════════════════════════
+   ABOUT
+══════════════════════════════════════════ */
+.about-layout {
+  display: grid; grid-template-columns: 280px 1fr; gap: 5rem; align-items: start;
+}
+
+.about-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); overflow: hidden; position: sticky; top: 80px;
+}
+.about-card-banner {
+  height: 80px;
+  background: linear-gradient(135deg, var(--accent-d), var(--accent));
+  position: relative;
+}
+.about-avatar {
+  width: 72px; height: 72px; border-radius: 50%;
+  background: var(--bg3); border: 3px solid var(--bg);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--ff-head); font-size: 1.6rem; font-weight: 900; color: var(--accent);
+  position: absolute; bottom: -36px; left: 1.5rem;
+}
+.about-card-body { padding: 3rem 1.5rem 1.5rem; }
+.about-card-name {
+  font-family: var(--ff-head); font-size: 1.15rem; font-weight: 700;
+  color: var(--ink); letter-spacing: -0.01em; margin-bottom: 0.2rem;
+}
+.about-card-role {
+  font-family: var(--ff-mono); font-size: 0.68rem;
+  color: var(--accent); letter-spacing: 0.1em;
+  text-transform: uppercase; margin-bottom: 1.25rem;
+}
+.about-card-status {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-size: 0.8rem; color: var(--green); margin-bottom: 1.5rem;
+}
+.about-card-status::before {
+  content: ''; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--green); box-shadow: 0 0 6px var(--green); flex-shrink: 0;
+}
+.contact-links { display: flex; flex-direction: column; gap: 0.6rem; }
+.contact-link {
+  display: flex; align-items: center; gap: 0.6rem;
+  font-size: 0.78rem; color: var(--ink2); text-decoration: none;
+  padding: 0.5rem 0; border-bottom: 1px solid var(--border);
+  transition: color 0.2s;
+}
+.contact-link:last-child { border-bottom: none; }
+.contact-link:hover { color: var(--accent); }
+.contact-link svg { width: 14px; height: 14px; color: var(--ink3); flex-shrink: 0; }
+
+.about-main { }
+.about-bio {
+  font-size: 1rem; color: var(--ink2); line-height: 1.85; margin-bottom: 1.5rem;
+}
+.about-bio strong { color: var(--ink); font-weight: 500; }
+
+.about-section-label {
+  font-family: var(--ff-mono); font-size: 0.68rem;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ink3); margin-bottom: 1rem; margin-top: 2rem;
+  padding-bottom: 0.5rem; border-bottom: 1px solid var(--border);
+}
+
+.skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+.skill-group { }
+.skill-group-name {
+  font-size: 0.83rem; font-weight: 600; color: var(--ink); margin-bottom: 0.75rem;
+}
+.skill-rows { display: flex; flex-direction: column; gap: 0.6rem; }
+.skill-row {
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 0.82rem; color: var(--ink2);
+}
+.skill-bar {
+  width: 90px; height: 3px; background: var(--border2); border-radius: 2px; overflow: hidden;
+}
+.skill-fill {
+  height: 100%; border-radius: 2px;
+  background: linear-gradient(90deg, var(--accent-d), var(--accent));
+  transition: width 1.2s ease;
+}
+
+/* Approach cards */
+.approach-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 2rem; }
+.approach-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 1.5rem;
+}
+.approach-icon { font-size: 1.5rem; margin-bottom: 0.75rem; }
+.approach-title { font-size: 0.9rem; font-weight: 600; color: var(--ink); margin-bottom: 0.5rem; }
+.approach-desc { font-size: 0.82rem; color: var(--ink2); line-height: 1.65; }
+
+/* ══════════════════════════════════════════
+   IMPROVEMENTS SECTION (bonus)
+══════════════════════════════════════════ */
+.improvements-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem;
+}
+.improvement-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 1.25rem;
+}
+.improvement-num {
+  font-family: var(--ff-mono); font-size: 0.65rem;
+  color: var(--accent); letter-spacing: 0.1em; margin-bottom: 0.5rem;
+}
+.improvement-title { font-size: 0.9rem; font-weight: 600; color: var(--ink); margin-bottom: 0.4rem; }
+.improvement-desc { font-size: 0.81rem; color: var(--ink2); line-height: 1.6; }
+
+/* ══════════════════════════════════════════
+   FOOTER
+══════════════════════════════════════════ */
+footer {
+  background: var(--bg2); border-top: 1px solid var(--border);
+  padding: 3rem 6rem;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.footer-brand { font-family: var(--ff-head); font-size: 1.1rem; color: var(--ink); }
+.footer-links { display: flex; gap: 1.5rem; }
+.footer-link {
+  font-family: var(--ff-mono); font-size: 0.7rem;
+  color: var(--ink3); text-decoration: none;
+  letter-spacing: 0.08em; transition: color 0.2s;
+}
+.footer-link:hover { color: var(--accent); }
+.footer-copy { font-family: var(--ff-mono); font-size: 0.68rem; color: var(--ink3); }
+
+/* ══════════════════════════════════════════
+   ANIMATIONS
+══════════════════════════════════════════ */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.hero-left > * { opacity: 0; animation: fadeUp 0.7s ease forwards; }
+.hero-eyebrow   { animation-delay: 0.05s; }
+.hero-greeting  { animation-delay: 0.1s; }
+.hero-name      { animation-delay: 0.18s; }
+.hero-title     { animation-delay: 0.26s; }
+.hero-desc      { animation-delay: 0.34s; }
+.hero-actions   { animation-delay: 0.42s; }
+.hero-social    { animation-delay: 0.5s; }
+.hero-right     { opacity: 0; animation: fadeUp 0.7s ease 0.55s forwards; }
+
+/* Scroll reveal */
+.reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ══════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════ */
+@media (max-width: 1100px) {
+  section { padding: 5rem 3rem; }
+  .hero-left { padding: 6rem 3rem 4rem 4rem; }
+  .hero-right { padding: 6rem 4rem 4rem 3rem; }
+  footer { padding: 2.5rem 3rem; }
+}
+
+@media (max-width: 900px) {
+  nav { padding: 0 1.5rem; }
+  .nav-center, .nav-badge { display: none; }
+  .nav-hamburger { display: flex; }
+
+  .hero { grid-template-columns: 1fr; min-height: auto; }
+  .hero-left { padding: 5rem 1.5rem 2.5rem; }
+  .hero-right { border-left: none; border-top: 1px solid var(--border); padding: 2rem 1.5rem; }
+
+  section { padding: 4rem 1.5rem; }
+  .projects-grid { grid-template-columns: 1fr; }
+  .project-card.featured { grid-template-columns: 1fr; }
+  .featured-findings-panel { border-left: none; border-top: 1px solid var(--border); }
+
+  .about-layout { grid-template-columns: 1fr; gap: 2rem; }
+  .about-card { position: static; }
+  .skills-grid { grid-template-columns: 1fr; }
+  .approach-grid { grid-template-columns: 1fr; }
+  footer { flex-direction: column; gap: 1.5rem; text-align: center; padding: 2rem 1.5rem; }
+  .footer-links { justify-content: center; }
+}
+
+@media (max-width: 480px) {
+  .hero-name { font-size: 2.4rem; }
+  .hero-actions { flex-direction: column; }
+  .btn { justify-content: center; }
+  .section-title { font-size: 1.7rem; }
+  .improvements-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ NAV ══ -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-mark">AR</div>
+    <span class="nav-logo-text">Abhi<span>Raju</span></span>
+  </a>
+
+  <div class="nav-center">
+    <a href="#projects" class="nav-link">Projects</a>
+    <a href="#about" class="nav-link">About</a>
+    <a href="#improvements" class="nav-link">Roadmap</a>
+  </div>
+
+  <div class="nav-right">
+    <span class="nav-badge">Open to Work</span>
+    <a href="mailto:abhirajmallapu@gmail.com" class="nav-cta">Hire Me</a>
+  </div>
+
+  <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#projects" class="nav-link">Projects</a>
+  <a href="#about" class="nav-link">About</a>
+  <a href="#improvements" class="nav-link">Roadmap</a>
+  <a href="mailto:abhirajmallapu@gmail.com" class="nav-link" style="color:var(--accent)">Hire Me →</a>
+</div>
+
+<!-- ══ HERO ══ -->
+<section class="hero" id="home">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Aspiring ML Engineer · Fresher</div>
+    <div class="hero-greeting">Hi, I'm</div>
+    <h1 class="hero-name">
+      Abhi Raju<br>
+      <span class="last">Mallapu</span>
+    </h1>
+    <div class="hero-title">// machine_learning · data_science · embedded_systems</div>
+    <p class="hero-desc">
+      A passionate and self-driven engineering fresher building <strong>production-grade ML systems</strong>
+      from scratch. I don't just train models — I investigate why they work, where they fail,
+      and how to make them trustworthy. Every project here includes honest documentation of
+      <strong>failures, dataset pitfalls, and design decisions</strong> — because that's what
+      real engineering looks like.
+    </p>
+    <div class="hero-actions">
+      <a href="#projects" class="btn btn-primary">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        Explore Projects
+      </a>
+      <a href="https://github.com/mallapuabhiraj" target="_blank" class="btn btn-outline">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        GitHub
+      </a>
+      <a href="https://linkedin.com/in/abhirajmallapu" target="_blank" class="btn btn-ghost">LinkedIn</a>
+    </div>
+    <div class="hero-social">
+      <a href="mailto:abhirajmallapu@gmail.com" class="social-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22,7-10,7L2,7"/></svg>
+        abhirajmallapu@gmail.com
+      </a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="status-card">
+      <div class="status-card-header">
+        <span class="status-card-title">Current Status</span>
+        <span class="status-dot"></span>
+      </div>
+      <div class="status-main">Actively Seeking Opportunities</div>
+      <div class="status-sub">ML Engineer · Data Scientist · Fresher · Available immediately</div>
+    </div>
+
+    <div class="status-card">
+      <div class="status-card-header">
+        <span class="status-card-title">What I Build</span>
+      </div>
+      <div class="status-main">End-to-End ML Systems</div>
+      <div class="status-sub">From raw data and feature engineering to deployed, explainable models with honest evaluation.</div>
+    </div>
+
+    <div class="status-card">
+      <div class="status-card-header">
+        <span class="status-card-title">Core Stack</span>
+      </div>
+      <div class="skill-cloud">
+        <span class="skill-pill hi">Python</span>
+        <span class="skill-pill hi">XGBoost</span>
+        <span class="skill-pill hi">CatBoost</span>
+        <span class="skill-pill hi">Scikit-learn</span>
+        <span class="skill-pill hi">SHAP</span>
+        <span class="skill-pill">Optuna</span>
+        <span class="skill-pill">Streamlit</span>
+        <span class="skill-pill">Docker</span>
+        <span class="skill-pill">Arduino C++</span>
+        <span class="skill-pill">Pandas · NumPy</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PROJECTS ══ -->
+<section id="projects" class="alt">
+  <div class="section-header reveal">
+    <span class="section-num">01</span>
+    <h2 class="section-title">Projects</h2>
+    <span class="section-sub">5 shipped · 2 live demos</span>
+  </div>
+
+  <div class="projects-grid">
+
+    <!-- PhreshCatch FEATURED -->
+    <div class="project-card featured reveal">
+      <div style="display:flex;flex-direction:column;">
+        <div class="card-top">
+          <div class="card-icon" style="background:rgba(79,126,255,0.12);">🎣</div>
+          <div class="card-badges">
+            <span class="badge badge-live">● Live</span>
+            <span class="badge badge-ml">ML · Security</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">PhreshCatch — Phishing URL Detector</div>
+          <div class="card-desc">
+            An end-to-end phishing detection system that classifies any URL as phishing or benign
+            in under 0.4ms — using nothing but the URL string itself. No page visits, no DNS lookups,
+            no HTML parsing. Built on 27 hand-engineered features extracted purely from URL structure
+            and trained on PhreshPhish, a production-grade dataset from real browsing telemetry of
+            6 million Webroot users. The model catches <strong style="color:var(--accent)">97.74% of phishing URLs</strong>
+            at a threshold of 0.57 — deliberately tuned for security contexts where missing a threat
+            costs far more than a false alarm.
+          </div>
+          <div class="card-metrics">
+            <div class="metric-row"><span class="metric-key">Catch Rate</span><span class="metric-val">97.74%</span></div>
+            <div class="metric-row"><span class="metric-key">ROC-AUC</span><span class="metric-val">0.9804</span></div>
+            <div class="metric-row"><span class="metric-key">Inference</span><span class="metric-val">0.4ms per URL</span></div>
+            <div class="metric-row"><span class="metric-key">Training Data</span><span class="metric-val">498,255 URLs</span></div>
+            <div class="metric-row"><span class="metric-key">Decision Threshold</span><span class="metric-val">0.57 (security-optimised)</span></div>
+          </div>
+          <div class="card-tags">
+            <span class="card-tag">XGBoost</span><span class="card-tag">Optuna</span>
+            <span class="card-tag">SHAP</span><span class="card-tag">Feature Engineering</span>
+            <span class="card-tag">Streamlit</span><span class="card-tag">HuggingFace</span>
+            <span class="card-tag">PhreshPhish Dataset</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <a href="https://huggingface.co/spaces/abhirajmallapu/phreshcatch" target="_blank" class="card-link primary">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            Live Demo
+          </a>
+          <span class="card-link-sep">·</span>
+          <a href="https://github.com/mallapuabhiraj/phreshcatch" target="_blank" class="card-link">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            GitHub
+          </a>
+        </div>
+      </div>
+      <div class="featured-findings-panel">
+        <div class="findings-label">Research Findings</div>
+        <div class="finding-item">
+          <span class="finding-tag">F1</span>
+          Detected data leakage in PhiUSIIL — URLSimilarityIndex returned exactly 100.0 for every legitimate URL, making it a label proxy not a feature. Dropped immediately.
+        </div>
+        <div class="finding-item">
+          <span class="finding-tag">F2</span>
+          Same model: 99% accuracy on its own test set, 23% phishing recall on ISCX-2016. A textbook domain shift collapse, documented in full.
+        </div>
+        <div class="finding-item">
+          <span class="finding-tag">F3</span>
+          PathLength became the #1 SHAP feature — it didn't exist in the original feature set. Real sites have real content. Short paths are almost always phishing.
+        </div>
+      </div>
+    </div>
+
+    <!-- Fraud Detection -->
+    <div class="project-card reveal">
+      <div class="card-top">
+        <div class="card-icon" style="background:rgba(245,166,35,0.12);">⚡</div>
+        <div class="card-badges"><span class="badge badge-ml">ML · Fintech</span></div>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Credit Card Fraud Detection</div>
+        <div class="card-desc">
+          Detecting financial fraud in 1.2 million transactions where only 0.6% are fraudulent.
+          Standard accuracy is meaningless here — predicting everything as legitimate gives 99.4%.
+          This project diagnoses why XGBoost failed (encoding drift across time splits),
+          switches to CatBoost's native ordered statistics, and improves PR-AUC from 0.67 to 0.93
+          while collapsing the validation-to-test gap from 0.11 to 0.028. Features include
+          geospatial distance, impossible travel detection, and card-level behavioural baselines.
+        </div>
+        <div class="card-metrics">
+          <div class="metric-row"><span class="metric-key">PR-AUC</span><span class="metric-val">0.9284</span></div>
+          <div class="metric-row"><span class="metric-key">Fraud Recall</span><span class="metric-val">89%</span></div>
+          <div class="metric-row"><span class="metric-key">Val→Test Gap</span><span class="metric-val">0.028 (was 0.11)</span></div>
+          <div class="metric-row"><span class="metric-key">Decision Threshold</span><span class="metric-val">0.862 (cost-optimised)</span></div>
+        </div>
+        <div class="card-tags">
+          <span class="card-tag">CatBoost</span><span class="card-tag">Optuna</span>
+          <span class="card-tag">Time-Series Split</span><span class="card-tag">Cost-Sensitive ML</span>
+          <span class="card-tag">Haversine Features</span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <a href="https://github.com/mallapuabhiraj/fraud-detection-catboost" target="_blank" class="card-link primary">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          View on GitHub
+        </a>
+      </div>
+    </div>
+
+    <!-- Heart Disease -->
+    <div class="project-card reveal">
+      <div class="card-top">
+        <div class="card-icon" style="background:rgba(255,95,126,0.12);">🫀</div>
+        <div class="card-badges">
+          <span class="badge badge-hc">Healthcare ML</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Heart Disease Prediction</div>
+        <div class="card-desc">
+          A clinical ML pipeline predicting heart disease from 13 routine patient features on the
+          Cleveland dataset. The core insight: default 0.5 thresholds optimise for accuracy, not
+          for medicine. A missed positive is a missed diagnosis — a false negative is catastrophically
+          worse than a false alarm. All three models were threshold-tuned to achieve ≥90% recall first,
+          then differentiated by false positive rate. Engineered 10 clinically-motivated features —
+          2 of the top 3 SHAP predictors were hand-crafted.
+        </div>
+        <div class="card-metrics">
+          <div class="metric-row"><span class="metric-key">Accuracy</span><span class="metric-val">86.9% (SVM)</span></div>
+          <div class="metric-row"><span class="metric-key">Recall</span><span class="metric-val">90.9% (all 3 models)</span></div>
+          <div class="metric-row"><span class="metric-key">False Negatives</span><span class="metric-val">3 on 61 test patients</span></div>
+          <div class="metric-row"><span class="metric-key">Engineered Features</span><span class="metric-val">10 of 23 total</span></div>
+        </div>
+        <div class="card-tags">
+          <span class="card-tag">SVM</span><span class="card-tag">Random Forest</span>
+          <span class="card-tag">Logistic Regression</span><span class="card-tag">Threshold Tuning</span>
+          <span class="card-tag">Clinical Features</span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <a href="https://colab.research.google.com/drive/1ja3Nq4JUDv1eladVbhZSnpZe6oavZO7B" target="_blank" class="card-link primary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Open in Colab
+        </a>
+        <span class="card-link-sep">·</span>
+        <a href="https://github.com/mallapuabhiraj/heart-disease-prediction" target="_blank" class="card-link">GitHub</a>
+      </div>
+    </div>
+
+    <!-- Solar Tracker -->
+    <div class="project-card reveal">
+      <div class="card-top">
+        <div class="card-icon" style="background:rgba(245,166,35,0.12);">☀️</div>
+        <div class="card-badges"><span class="badge badge-iot">IoT · Embedded</span></div>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Single-Axis Solar Tracker</div>
+        <div class="card-desc">
+          A self-built Arduino prototype that autonomously tracks the sun from sunrise to sunset
+          using dual LDR sensors and a feedback control loop. A fixed solar panel is optimally
+          aligned for only 2–3 hours per day — this system extends peak generation to ~10 hours.
+          Built for under ₹1,200 with a sense→compare→actuate loop running every 100ms.
+          Demonstrated +30–40% energy yield improvement over a static panel.
+        </div>
+        <div class="card-metrics">
+          <div class="metric-row"><span class="metric-key">Energy Gain</span><span class="metric-val">+30–40% over fixed panel</span></div>
+          <div class="metric-row"><span class="metric-key">Build Cost</span><span class="metric-val">Under ₹1,200</span></div>
+          <div class="metric-row"><span class="metric-key">Loop Speed</span><span class="metric-val">100ms feedback cycle</span></div>
+        </div>
+        <div class="card-tags">
+          <span class="card-tag">Arduino C++</span><span class="card-tag">PWM Control</span>
+          <span class="card-tag">Analog Sensing</span><span class="card-tag">Feedback Loop</span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <a href="https://github.com/mallapuabhiraj/arduino-solar-tracker" target="_blank" class="card-link primary">GitHub</a>
+      </div>
+    </div>
+
+    <!-- Gas Leakage -->
+    <div class="project-card reveal">
+      <div class="card-top">
+        <div class="card-icon" style="background:rgba(255,95,126,0.12);">🔴</div>
+        <div class="card-badges"><span class="badge badge-iot">IoT · Safety</span></div>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Gas Leakage Detection System</div>
+        <div class="card-desc">
+          An automatic gas detection and valve control system that reacts in under 500ms —
+          no human required. The first version hardcoded a threshold that failed in a different room
+          due to ambient air variation. The fix: adaptive calibration that measures its own environment
+          on startup and sets a personalised baseline. That failure taught a lesson about safety
+          systems that hardcode assumptions — a system that cries wolf is almost as dangerous as
+          one that goes silent.
+        </div>
+        <div class="card-metrics">
+          <div class="metric-row"><span class="metric-key">Response Time</span><span class="metric-val">&lt;500ms</span></div>
+          <div class="metric-row"><span class="metric-key">Build Cost</span><span class="metric-val">Under ₹750</span></div>
+          <div class="metric-row"><span class="metric-key">Calibration</span><span class="metric-val">Adaptive (no hardcoding)</span></div>
+        </div>
+        <div class="card-tags">
+          <span class="card-tag">Arduino C++</span><span class="card-tag">MQ-135</span>
+          <span class="card-tag">Safety Systems</span><span class="card-tag">Adaptive Threshold</span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <a href="https://github.com/mallapuabhiraj/gas-leakage-detector" target="_blank" class="card-link primary">GitHub</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ ABOUT ══ -->
+<section id="about">
+  <div class="section-header reveal">
+    <span class="section-num">02</span>
+    <h2 class="section-title">About Me</h2>
+  </div>
+
+  <div class="about-layout">
+    <div class="about-card reveal">
+      <div class="about-card-banner"></div>
+      <div class="about-card-body">
+        <div class="about-avatar">AR</div>
+        <div class="about-card-name">Abhi Raju Mallapu</div>
+        <div class="about-card-role">ML Engineer · Data Scientist</div>
+        <div class="about-card-status">Open to Work — Available Now</div>
+        <div class="contact-links">
+          <a href="mailto:abhirajmallapu@gmail.com" class="contact-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22,7-10,7L2,7"/></svg>
+            abhirajmallapu@gmail.com
+          </a>
+          <a href="https://linkedin.com/in/abhirajmallapu" target="_blank" class="contact-link">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            linkedin.com/in/abhirajmallapu
+          </a>
+          <a href="https://github.com/mallapuabhiraj" target="_blank" class="contact-link">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            github.com/mallapuabhiraj
+          </a>
+          <a href="https://huggingface.co/abhirajmallapu" target="_blank" class="contact-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+            huggingface.co/abhirajmallapu
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-main reveal">
+      <p class="about-bio">
+        I'm a <strong>fresher engineer</strong> with a genuine obsession for machine learning done right.
+        While most beginners stop at Kaggle accuracy scores, I dig into <strong>why models work, where
+        they break, and what that means in the real world</strong>. My projects document failures as
+        carefully as successes — data leakage, domain shift, overfitting — because honest engineering
+        is what actually builds trustworthy systems.
+      </p>
+      <p class="about-bio">
+        I've independently built across the full ML stack: <strong>tabular ML</strong> with gradient
+        boosted trees and advanced feature engineering, <strong>clinical AI</strong> with
+        safety-constrained threshold optimization, <strong>security ML</strong> with adversarial
+        dataset investigation, and <strong>embedded IoT systems</strong> with real-time feedback
+        control. Every project is end-to-end — from raw data to deployed application.
+      </p>
+      <p class="about-bio">
+        I'm actively looking for my first role as a <strong>Data Scientist or ML Engineer</strong>
+        where I can contribute immediately, keep learning fast, and build things that matter.
+      </p>
+
+      <div class="about-section-label">Technical Skills</div>
+      <div class="skills-grid">
+        <div class="skill-group">
+          <div class="skill-group-name">Machine Learning</div>
+          <div class="skill-rows">
+            <div class="skill-row">XGBoost / CatBoost / LightGBM <div class="skill-bar"><div class="skill-fill" style="width:93%"></div></div></div>
+            <div class="skill-row">Feature Engineering <div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div></div>
+            <div class="skill-row">Hyperparameter Tuning (Optuna) <div class="skill-bar"><div class="skill-fill" style="width:87%"></div></div></div>
+            <div class="skill-row">SHAP / Model Explainability <div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div></div>
+            <div class="skill-row">Scikit-learn Pipelines <div class="skill-bar"><div class="skill-fill" style="width:88%"></div></div></div>
+          </div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-name">Engineering & Deployment</div>
+          <div class="skill-rows">
+            <div class="skill-row">Python <div class="skill-bar"><div class="skill-fill" style="width:95%"></div></div></div>
+            <div class="skill-row">Streamlit <div class="skill-bar"><div class="skill-fill" style="width:82%"></div></div></div>
+            <div class="skill-row">Docker / HuggingFace <div class="skill-bar"><div class="skill-fill" style="width:72%"></div></div></div>
+            <div class="skill-row">Arduino / Embedded C++ <div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div></div>
+            <div class="skill-row">Git / GitHub <div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-section-label">My Approach</div>
+      <div class="approach-grid">
+        <div class="approach-card">
+          <div class="approach-icon">🔍</div>
+          <div class="approach-title">Investigate, Don't Assume</div>
+          <div class="approach-desc">I caught data leakage, domain shift, and scraping bias that made three datasets unsuitable before finding the right one.</div>
+        </div>
+        <div class="approach-card">
+          <div class="approach-icon">📊</div>
+          <div class="approach-title">Right Metrics for the Problem</div>
+          <div class="approach-desc">PR-AUC for imbalanced fraud. Recall-first for clinical ML. Security-optimised thresholds for phishing. Accuracy alone is almost never the answer.</div>
+        </div>
+        <div class="approach-card">
+          <div class="approach-icon">🚀</div>
+          <div class="approach-title">Ship and Document</div>
+          <div class="approach-desc">Every project has a live demo or Colab link, honest limitations section, and documented failures — because real engineers write that down.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 10 IMPROVEMENTS ══ -->
+<section id="improvements" class="alt">
+  <div class="section-header reveal">
+    <span class="section-num">03</span>
+    <h2 class="section-title">Portfolio Roadmap</h2>
+    <span class="section-sub">10 improvements to stand out</span>
+  </div>
+
+  <div class="improvements-grid">
+    <div class="improvement-card reveal">
+      <div class="improvement-num">01</div>
+      <div class="improvement-title">Add a Case Study Blog</div>
+      <div class="improvement-desc">Write one deep-dive article per project (on Medium or dev.to) explaining the dataset investigation, key decisions, and findings. Link from each project card. Recruiters Google candidates — articles rank.</div>
+    </div>
+    <div class="improvement-card reveal">
+      <div class="improvement-num">02</div>
+      <div class="improvement-title">Project Demo Pages with Iframes</div>
+      <div class="improvement-desc">Separate routes for PhreshCatch, Fraud, and Heart Disease with the live HuggingFace demo embedded. A recruiter should be able to interact with your model without leaving your site.</div>
+    </div>
+    <div class="improvement-card reveal">
+      <div class="improvement-num">03</div>
+      <div class="improvement-title">GitHub Activity Heatmap</div>
+      <div class="improvement-desc">Embed your GitHub contribution graph in the About section using the GitHub Readme Stats API. Consistent green squares signal active, disciplined engineering.</div>
+    </div>
+    <div class="improvement-card reveal">
+      <div class="improvement-num">04</div>
+      <div class="improvement-title">Add a RAG / LLM Project</div>
+      <div class="improvement-desc">One NLP/LLM project (e.g. a document Q&A chatbot with LangChain + FAISS) would fill the biggest gap in your current portfolio and align with what most companies are hiring for right now.</div>
+    </div>
+    <div class="improvement-card reveal">
+      <div class="improvement-num">05</div>
+      <div class="improvement-title">Testimonials or Endorsements</div>
+      <div class="improvement-desc">A quote from a professor, mentor, or peer who has reviewed your work adds immediate social proof. Even one short, genuine quote changes how a recruiter reads the page.</div>
+    </div>
+    <div class="improvement-card reveal">
+      <div class="improvement-num">06</div>
+      <div class="improvement-title">Downloadable Resume Button</div>
+      <div class="improvement-desc">A prominent "Download Resume (PDF)" button in the nav and About section. Recruiters should never have to ask for it — it should be one click away at all times.</div>
+    </div>
+    <div class="improvement-card reveal">
+      <div class="improvement-num">07</div>
+      <div class="improvement-title">Project Video Walkthroughs</div>
+      <div class="improvement-desc">A 2-minute Loom or YouTube screen recording per project showing the demo in action. Video thumbnails embedded in cards make the portfolio dramatically more engaging and shareable.</div>
+    </div>
+    <div class="improvement-card reveal">
+      <div class="improvement-num">08</div>
+      <div class="improvement-title">FastAPI REST Endpoint</div>
+      <div class="improvement-desc">Wrap your best model (Fraud or PhreshCatch) in a public FastAPI endpoint with Swagger docs. Lets engineers evaluate your API design skills — a completely different signal from a Streamlit demo.</div>
+    </div>
+    <div class="improvement-card reveal">
+      <div class="improvement-num">09</div>
+      <div class="improvement-title">MLOps Mini-Pipeline</div>
+      <div class="improvement-desc">Add MLflow experiment tracking + a GitHub Actions CI workflow that retrains or validates the model on push. Even a basic setup signals production awareness that most freshers lack entirely.</div>
+    </div>
+    <div class="improvement-card reveal">
+      <div class="improvement-num">10</div>
+      <div class="improvement-title">Custom Domain</div>
+      <div class="improvement-desc">abhirajmallapu.dev or abhiraju.ml costs ~₹800/year. A custom domain on a portfolio signals that you take your professional presence seriously — and it's memorable on a resume.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-brand">Abhi Raju Mallapu</div>
+  <div class="footer-links">
+    <a href="https://github.com/mallapuabhiraj" target="_blank" class="footer-link">GitHub</a>
+    <a href="https://linkedin.com/in/abhirajmallapu" target="_blank" class="footer-link">LinkedIn</a>
+    <a href="https://huggingface.co/abhirajmallapu" target="_blank" class="footer-link">HuggingFace</a>
+    <a href="mailto:abhirajmallapu@gmail.com" class="footer-link">Email</a>
+  </div>
+  <div class="footer-copy">Built with HTML · Hosted on GitHub Pages</div>
+</footer>
+
+<script>
+// Nav scroll effect
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 20);
+});
+
+// Mobile menu
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+hamburger.addEventListener('click', () => {
+  mobileMenu.classList.toggle('open');
+});
+document.querySelectorAll('.mobile-menu .nav-link').forEach(l => {
+  l.addEventListener('click', () => mobileMenu.classList.remove('open'));
+});
+
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Active nav link
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-link');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) current = s.id; });
+  navLinks.forEach(l => {
+    l.classList.remove('active');
+    if (l.getAttribute('href') === '#' + current) l.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
