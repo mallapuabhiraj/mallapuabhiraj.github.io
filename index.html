@@ -3,1353 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Abhi Raju Mallapu — Aspiring ML Engineer</title>
+<title>Abhi Raju Mallapu — ML Engineer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-/* ── CSS Variables ── */
-:root {
-  --bg: #0a0a0f;
-  --bg2: #12121a;
-  --bg3: #1a1a25;
-  --card: rgba(255, 255, 255, 0.03);
-  --border: rgba(255, 255, 255, 0.08);
-  --border2: rgba(255, 255, 255, 0.15);
-  
-  --ink: #ffffff;
-  --ink2: #a0a0b0;
-  --ink3: #606070;
-  
-  --accent: #6366f1;
-  --accent2: #8b5cf6;
-  --accent3: #ec4899;
-  --success: #10b981;
-  --warning: #f59e0b;
-  
-  --ff-head: 'Space Grotesk', sans-serif;
-  --ff-body: 'Inter', sans-serif;
-  --ff-mono: 'JetBrains Mono', monospace;
-  
-  --radius: 12px;
-  --radius-lg: 20px;
-}
-
-/* ── Base ── */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  font-family: var(--ff-body);
-  background: var(--bg);
-  color: var(--ink);
-  line-height: 1.6;
-  overflow-x: hidden;
-  cursor: default;
-}
-
-/* ── Animated Background ── */
-.animated-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  background: 
-    radial-gradient(ellipse at 20% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 80%, rgba(236, 72, 153, 0.1) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 50%, rgba(139, 92, 246, 0.05) 0%, transparent 70%);
-  animation: bgShift 20s ease-in-out infinite;
-}
-
-@keyframes bgShift {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(30px, -30px) scale(1.1); }
-  66% { transform: translate(-20px, 20px) scale(0.95); }
-}
-
-/* ── Floating Particles ── */
-.particles {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 0;
-  overflow: hidden;
-}
-
-.particle {
-  position: absolute;
-  font-size: 1.2rem;
-  opacity: 0.15;
-  animation: float 15s infinite ease-in-out;
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.15; }
-  50% { transform: translateY(-100px) rotate(180deg); opacity: 0.3; }
-}
-
-/* ── Custom Cursor ── */
-.cursor {
-  width: 20px;
-  height: 20px;
-  border: 2px solid var(--accent);
-  border-radius: 50%;
-  position: fixed;
-  pointer-events: none;
-  z-index: 9999;
-  transition: transform 0.2s, background 0.2s;
-  mix-blend-mode: difference;
-}
-
-.cursor.hover {
-  transform: scale(2);
-  background: var(--accent);
-  opacity: 0.3;
-}
-
-/* ── Navigation ── */
-nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-  padding: 1.5rem 3rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: rgba(10, 10, 15, 0.8);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border);
-}
-
-.nav-logo {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  text-decoration: none;
-  cursor: pointer;
-  transition: transform 0.3s;
-}
-
-.nav-logo:hover {
-  transform: scale(1.05);
-}
-
-.logo-mark {
-  width: 40px;
-  height: 40px;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--ff-head);
-  font-weight: 700;
-  color: white;
-  font-size: 1.1rem;
-  position: relative;
-  overflow: hidden;
-}
-
-.logo-mark::after {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
-  transform: rotate(45deg);
-  transition: all 0.5s;
-  opacity: 0;
-}
-
-.nav-logo:hover .logo-mark::after {
-  animation: shine 0.6s ease-in-out;
-}
-
-@keyframes shine {
-  0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); opacity: 0; }
-  50% { opacity: 1; }
-  100% { transform: translateX(100%) translateY(100%) rotate(45deg); opacity: 0; }
-}
-
-.logo-text {
-  font-family: var(--ff-head);
-  font-weight: 600;
-  color: var(--ink);
-  font-size: 1.1rem;
-}
-
-.nav-links {
-  display: flex;
-  gap: 2.5rem;
-  list-style: none;
-}
-
-.nav-links a {
-  font-family: var(--ff-body);
-  font-size: 0.9rem;
-  color: var(--ink2);
-  text-decoration: none;
-  position: relative;
-  transition: color 0.3s;
-  font-weight: 500;
-}
-
-.nav-links a::after {
-  content: '';
-  position: absolute;
-  bottom: -5px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--accent), var(--accent3));
-  transition: width 0.3s;
-}
-
-.nav-links a:hover {
-  color: var(--ink);
-}
-
-.nav-links a:hover::after {
-  width: 100%;
-}
-
-.status-badge {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  background: rgba(16, 185, 129, 0.1);
-  border: 1px solid rgba(16, 185, 129, 0.3);
-  border-radius: 50px;
-  font-family: var(--ff-mono);
-  font-size: 0.75rem;
-  color: var(--success);
-}
-
-.status-badge::before {
-  content: '';
-  width: 6px;
-  height: 6px;
-  background: var(--success);
-  border-radius: 50%;
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
-  50% { opacity: 0.8; box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
-}
-
-/* ── Hero Section ── */
-.hero {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  padding: 8rem 5rem 5rem;
-  position: relative;
-  gap: 4rem;
-}
-
-.hero-content {
-  flex: 1;
-  max-width: 700px;
-  z-index: 1;
-}
-
-.hero-eyebrow {
-  font-family: var(--ff-mono);
-  font-size: 0.8rem;
-  color: var(--accent);
-  margin-bottom: 1.5rem;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-}
-
-.hero-eyebrow::before {
-  content: '';
-  width: 40px;
-  height: 1px;
-  background: var(--accent);
-}
-
-.hero-title {
-  font-family: var(--ff-head);
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  font-weight: 700;
-  line-height: 1.1;
-  margin-bottom: 1.5rem;
-  background: linear-gradient(135deg, var(--ink) 0%, var(--ink2) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.typing-text {
-  display: inline;
-  border-right: 3px solid var(--accent);
-  animation: blink 1s infinite;
-}
-
-@keyframes blink {
-  0%, 50% { border-color: var(--accent); }
-  51%, 100% { border-color: transparent; }
-}
-
-.hero-subtitle {
-  font-family: var(--ff-mono);
-  font-size: 1rem;
-  color: var(--accent2);
-  margin-bottom: 1.5rem;
-  font-weight: 500;
-}
-
-.hero-desc {
-  font-size: 1.1rem;
-  color: var(--ink2);
-  line-height: 1.8;
-  margin-bottom: 2.5rem;
-  max-width: 600px;
-}
-
-.hero-desc strong {
-  color: var(--ink);
-  font-weight: 500;
-}
-
-.hero-cta {
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 3rem;
-  flex-wrap: wrap;
-}
-
-.btn {
-  padding: 1rem 2rem;
-  border-radius: var(--radius);
-  font-family: var(--ff-body);
-  font-size: 0.95rem;
-  font-weight: 600;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  transition: all 0.3s;
-  cursor: pointer;
-  border: none;
-  position: relative;
-  overflow: hidden;
-}
-
-.btn-primary {
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  color: white;
-  box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
-}
-
-.btn-primary:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 30px rgba(99, 102, 241, 0.4);
-}
-
-.btn-secondary {
-  background: transparent;
-  color: var(--ink);
-  border: 1px solid var(--border2);
-}
-
-.btn-secondary:hover {
-  background: var(--card);
-  border-color: var(--accent);
-  transform: translateY(-3px);
-}
-
-.currently-vibing {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 1rem 1.5rem;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  max-width: fit-content;
-}
-
-.vibing-label {
-  font-family: var(--ff-mono);
-  font-size: 0.7rem;
-  color: var(--ink3);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-}
-
-.vibing-content {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.9rem;
-  color: var(--ink2);
-}
-
-.vibing-emoji {
-  animation: bounce 2s infinite;
-}
-
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
-}
-
-/* ── Hero Visual ── */
-.hero-visual {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  max-width: 450px;
-}
-
-.visual-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 2rem;
-  backdrop-filter: blur(10px);
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.visual-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-  border-color: var(--border2);
-}
-
-.visual-card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-
-.visual-card-title {
-  font-family: var(--ff-mono);
-  font-size: 0.7rem;
-  color: var(--ink3);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-}
-
-.visual-card-value {
-  font-family: var(--ff-head);
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: var(--ink);
-  margin-bottom: 0.5rem;
-}
-
-.visual-card-desc {
-  font-size: 0.9rem;
-  color: var(--ink2);
-}
-
-.skill-pills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: 1rem;
-}
-
-.skill-pill {
-  padding: 0.4rem 0.8rem;
-  background: rgba(99, 102, 241, 0.1);
-  border: 1px solid rgba(99, 102, 241, 0.3);
-  border-radius: 50px;
-  font-family: var(--ff-mono);
-  font-size: 0.75rem;
-  color: var(--accent);
-  transition: all 0.3s;
-}
-
-.skill-pill:hover {
-  background: rgba(99, 102, 241, 0.2);
-  transform: scale(1.05);
-}
-
-/* ── Section Styles ── */
-section {
-  padding: 6rem 5rem;
-  position: relative;
-  z-index: 1;
-}
-
-.section-header {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 3rem;
-}
-
-.section-num {
-  font-family: var(--ff-mono);
-  font-size: 0.8rem;
-  color: var(--accent);
-  font-weight: 500;
-}
-
-.section-title {
-  font-family: var(--ff-head);
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: var(--ink);
-}
-
-.section-subtitle {
-  margin-left: auto;
-  font-family: var(--ff-mono);
-  font-size: 0.85rem;
-  color: var(--ink3);
-}
-
-/* ── Projects Grid ── */
-.projects-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 2rem;
-}
-
-.project-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  transform-style: preserve-3d;
-  perspective: 1000px;
-}
-
-.project-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, transparent 40%, rgba(99, 102, 241, 0.1) 100%);
-  opacity: 0;
-  transition: opacity 0.3s;
-  pointer-events: none;
-}
-
-.project-card:hover {
-  transform: translateY(-10px) rotateX(5deg);
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
-  border-color: var(--accent);
-}
-
-.project-card:hover::before {
-  opacity: 1;
-}
-
-.project-card.featured {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-}
-
-.card-header {
-  padding: 2rem 2rem 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-}
-
-.card-icon {
-  width: 50px;
-  height: 50px;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-}
-
-.card-badges {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.badge {
-  padding: 0.4rem 0.8rem;
-  border-radius: 50px;
-  font-family: var(--ff-mono);
-  font-size: 0.7rem;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.badge-live {
-  background: rgba(16, 185, 129, 0.1);
-  color: var(--success);
-  border: 1px solid rgba(16, 185, 129, 0.3);
-  animation: glow 2s infinite;
-}
-
-@keyframes glow {
-  0%, 100% { box-shadow: 0 0 5px rgba(16, 185, 129, 0.3); }
-  50% { box-shadow: 0 0 20px rgba(16, 185, 129, 0.5); }
-}
-
-.badge-ml {
-  background: rgba(99, 102, 241, 0.1);
-  color: var(--accent);
-  border: 1px solid rgba(99, 102, 241, 0.3);
-}
-
-.card-body {
-  padding: 1.5rem 2rem;
-}
-
-.card-title {
-  font-family: var(--ff-head);
-  font-size: 1.4rem;
-  font-weight: 600;
-  color: var(--ink);
-  margin-bottom: 0.75rem;
-}
-
-.card-desc {
-  font-size: 0.95rem;
-  color: var(--ink2);
-  line-height: 1.7;
-  margin-bottom: 1.5rem;
-}
-
-.card-metrics {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  margin-bottom: 1.5rem;
-}
-
-.metric {
-  display: flex;
-  justify-content: space-between;
-  font-family: var(--ff-mono);
-  font-size: 0.8rem;
-  padding: 0.5rem 0;
-  border-bottom: 1px solid var(--border);
-}
-
-.metric-label {
-  color: var(--ink3);
-}
-
-.metric-value {
-  color: var(--accent);
-  font-weight: 600;
-}
-
-.card-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 1.5rem;
-}
-
-.tag {
-  padding: 0.3rem 0.7rem;
-  background: var(--bg3);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  font-family: var(--ff-mono);
-  font-size: 0.75rem;
-  color: var(--ink2);
-  transition: all 0.3s;
-}
-
-.tag:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-  transform: translateY(-2px);
-}
-
-.card-footer {
-  padding: 1.25rem 2rem;
-  border-top: 1px solid var(--border);
-  display: flex;
-  gap: 1rem;
-  background: rgba(0, 0, 0, 0.2);
-}
-
-.card-link {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.9rem;
-  color: var(--ink2);
-  text-decoration: none;
-  font-weight: 500;
-  transition: all 0.3s;
-}
-
-.card-link:hover {
-  color: var(--accent);
-  transform: translateX(5px);
-}
-
-.card-link.primary {
-  color: var(--accent);
-}
-
-.featured-findings {
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(236, 72, 153, 0.05));
-  padding: 2rem;
-  border-left: 1px solid var(--border);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.findings-title {
-  font-family: var(--ff-mono);
-  font-size: 0.7rem;
-  color: var(--ink3);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin-bottom: 1.5rem;
-}
-
-.finding {
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 1.25rem;
-  font-size: 0.9rem;
-  color: var(--ink2);
-  line-height: 1.6;
-}
-
-.finding-num {
-  font-family: var(--ff-mono);
-  font-size: 0.7rem;
-  color: var(--accent3);
-  font-weight: 700;
-  flex-shrink: 0;
-  margin-top: 0.2rem;
-}
-
-/* ── About Section ── */
-.about-grid {
-  display: grid;
-  grid-template-columns: 300px 1fr;
-  gap: 4rem;
-  align-items: start;
-}
-
-.about-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 2rem;
-  position: sticky;
-  top: 100px;
-  text-align: center;
-}
-
-.about-avatar {
-  width: 100px;
-  height: 100px;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  border-radius: 50%;
-  margin: 0 auto 1.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--ff-head);
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: white;
-  position: relative;
-  overflow: hidden;
-}
-
-.about-avatar::after {
-  content: '👋';
-  position: absolute;
-  font-size: 2rem;
-  opacity: 0;
-  transition: all 0.3s;
-  transform: scale(0);
-}
-
-.about-card:hover .about-avatar::after {
-  opacity: 1;
-  transform: scale(1);
-}
-
-.about-name {
-  font-family: var(--ff-head);
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: var(--ink);
-  margin-bottom: 0.5rem;
-}
-
-.about-role {
-  font-family: var(--ff-mono);
-  font-size: 0.75rem;
-  color: var(--accent);
-  margin-bottom: 1.5rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-}
-
-.about-bio-text {
-  font-size: 0.9rem;
-  color: var(--ink2);
-  line-height: 1.7;
-  margin-bottom: 2rem;
-}
-
-.contact-links {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.contact-link {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.75rem;
-  background: var(--bg3);
-  border-radius: var(--radius);
-  color: var(--ink2);
-  text-decoration: none;
-  font-size: 0.85rem;
-  transition: all 0.3s;
-}
-
-.contact-link:hover {
-  background: var(--accent);
-  color: white;
-  transform: translateX(5px);
-}
-
-.about-main {
-  display: flex;
-  flex-direction: column;
-  gap: 3rem;
-}
-
-.bio-section {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 2rem;
-}
-
-.bio-text {
-  font-size: 1.05rem;
-  color: var(--ink2);
-  line-height: 1.9;
-  margin-bottom: 1rem;
-}
-
-.bio-text strong {
-  color: var(--ink);
-  font-weight: 500;
-}
-
-/* ── Skills with Confidence Meter ── */
-.skills-section {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 2rem;
-}
-
-.skills-title {
-  font-family: var(--ff-head);
-  font-size: 1.2rem;
-  font-weight: 600;
-  margin-bottom: 1.5rem;
-  color: var(--ink);
-}
-
-.skills-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-}
-
-.skill-category {
-  margin-bottom: 1.5rem;
-}
-
-.skill-category-title {
-  font-family: var(--ff-mono);
-  font-size: 0.75rem;
-  color: var(--ink3);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin-bottom: 1rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--border);
-}
-
-.skill-item {
-  margin-bottom: 1rem;
-}
-
-.skill-header {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 0.5rem;
-  font-size: 0.9rem;
-  color: var(--ink2);
-}
-
-.skill-bar {
-  height: 6px;
-  background: var(--bg3);
-  border-radius: 3px;
-  overflow: hidden;
-  position: relative;
-}
-
-.skill-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--accent), var(--accent2));
-  border-radius: 3px;
-  transition: width 1.5s ease-out;
-  position: relative;
-  overflow: hidden;
-}
-
-.skill-fill::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-  animation: shimmer 2s infinite;
-}
-
-@keyframes shimmer {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
-}
-
-.confidence-note {
-  margin-top: 1.5rem;
-  padding: 1rem;
-  background: rgba(245, 158, 11, 0.1);
-  border: 1px solid rgba(245, 158, 11, 0.3);
-  border-radius: var(--radius);
-  font-size: 0.85rem;
-  color: var(--warning);
-  font-style: italic;
-}
-
-/* ── Learning Log ── */
-.learning-log {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 2rem;
-}
-
-.log-title {
-  font-family: var(--ff-head);
-  font-size: 1.2rem;
-  font-weight: 600;
-  margin-bottom: 1.5rem;
-  color: var(--ink);
-}
-
-.log-entries {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.log-entry {
-  display: flex;
-  gap: 1rem;
-  padding: 1rem;
-  background: var(--bg3);
-  border-radius: var(--radius);
-  border-left: 3px solid var(--accent);
-  transition: all 0.3s;
-}
-
-.log-entry:hover {
-  transform: translateX(10px);
-  border-left-color: var(--accent3);
-}
-
-.log-date {
-  font-family: var(--ff-mono);
-  font-size: 0.7rem;
-  color: var(--ink3);
-  min-width: 80px;
-}
-
-.log-content {
-  font-size: 0.9rem;
-  color: var(--ink2);
-}
-
-.log-content strong {
-  color: var(--ink);
-}
-
-/* ── Bug Journal ── */
-.bug-journal {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 2rem;
-  margin-top: 2rem;
-}
-
-.bug-title {
-  font-family: var(--ff-head);
-  font-size: 1.2rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-  color: var(--ink);
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.bug-subtitle {
-  font-size: 0.85rem;
-  color: var(--ink3);
-  margin-bottom: 1.5rem;
-  font-style: italic;
-}
-
-.bug-entries {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1rem;
-}
-
-.bug-card {
-  padding: 1.5rem;
-  background: var(--bg3);
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  transition: all 0.3s;
-}
-
-.bug-card:hover {
-  border-color: var(--accent3);
-  transform: translateY(-5px);
-}
-.bug-emoji {
-  font-size: 1.5rem;
-  margin-bottom: 0.5rem;
-}
-
-.bug-name {
-  font-family: var(--ff-mono);
-  font-size: 0.8rem;
-  color: var(--accent3);
-  margin-bottom: 0.5rem;
-  font-weight: 600;
-}
-
-.bug-lesson {
-  font-size: 0.85rem;
-  color: var(--ink2);
-  line-height: 1.6;
-}
-
-/* ── Ask Me About ── */
-.ask-section {
-  margin-top: 3rem;
-}
-
-.ask-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1rem;
-  margin-top: 1.5rem;
-}
-
-.ask-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 1.5rem;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.4s;
-  transform-style: preserve-3d;
-  perspective: 1000px;
-  position: relative;
-  min-height: 120px;
-}
-
-.ask-card:hover {
-  transform: rotateY(180deg);
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  border-color: var(--accent);
-}
-
-.ask-front, .ask-back {
-  backface-visibility: hidden;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem;
-}
-
-.ask-back {
-  transform: rotateY(180deg);
-  font-size: 0.85rem;
-  color: white;
-}
-
-.ask-emoji {
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
-}
-
-.ask-label {
-  font-size: 0.85rem;
-  color: var(--ink2);
-  font-weight: 500;
-}
-
-/* ── Footer ── */
-footer {
-  background: var(--bg2);
-  border-top: 1px solid var(--border);
-  padding: 3rem 5rem;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.footer-content {
-  position: relative;
-  z-index: 1;
-}
-
-.footer-tagline {
-  font-family: var(--ff-head);
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: var(--ink);
-  margin-bottom: 1rem;
-}
-
-.footer-subtitle {
-  font-size: 1rem;
-  color: var(--ink2);
-  margin-bottom: 2rem;
-}
-
-.footer-links {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  margin-bottom: 2rem;
-}
-
-.footer-link {
-  color: var(--ink3);
-  text-decoration: none;
-  font-size: 0.9rem;
-  transition: all 0.3s;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.footer-link:hover {
-  color: var(--accent);
-  transform: translateY(-3px);
-}
-
-.footer-copy {
-  font-family: var(--ff-mono);
-  font-size: 0.8rem;
-  color: var(--ink3);
-  margin-top: 2rem;
-}
-
-.coffee-emoji {
-  display: inline-block;
-  animation: wiggle 2s infinite;
-}
-
-@keyframes wiggle {
-  0%, 100% { transform: rotate(0deg); }
-  25% { transform: rotate(-10deg); }
-  75% { transform: rotate(10deg); }
-}
-
-/* ── Scroll Reveal ── */
-.reveal {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.reveal.active {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* ── Responsive ── */
-@media (max-width: 1024px) {
-  .hero {
-    flex-direction: column;
-    padding: 7rem 2rem 3rem;
-  }
-  
-  .hero-visual {
-    max-width: 100%;
-    width: 100%;
-  }
-  
-  .about-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .about-card {
-    position: static;
-  }
-  
-  .project-card.featured {
-    grid-template-columns: 1fr;
-  }
-  
-  .featured-findings {
-    border-left: none;
-    border-top: 1px solid var(--border);
-  }
-  
-  .ask-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  
-  .skills-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 768px) {
-  nav {
-    padding: 1rem;
-  }
-  
-  .nav-links {
-    display: none;
-  }
-  
-  section {
-    padding: 4rem 1.5rem;
-  }
-  
-  .hero-title {
-    font-size: 2rem;
-  }
-  
-  .projects-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .ask-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  footer {
-    padding: 2rem 1.5rem;
-  }
-}
-
-/* ── Party Mode ── */
-body.party-mode {
-  --accent: #f472b6;
-  --accent2: #a78bfa;
-  --accent3: #34d399;
-}
-
-body.party-mode .animated-bg {
-  animation: partyBg 5s linear infinite;
-  background: 
-    radial-gradient(ellipse at 20% 20%, rgba(244, 114, 182, 0.2) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 80%, rgba(167, 139, 250, 0.15) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 50%, rgba(52, 211, 153, 0.1) 0%, transparent 70%);
-}
-
-@keyframes partyBg {
-  0% { filter: hue-rotate(0deg); }
-  100% { filter: hue-rotate(360deg); }
-}
-
-/* ── Mobile Menu ── */
-.mobile-menu-btn {
-  display: none;
-  flex-direction: column;
-  gap: 4px;
-  cursor: pointer;
-  padding: 8px;
-  background: none;
-  border: none;
-}
-
-.mobile-menu-btn span {
-  display: block;
-  width: 24px;
-  height: 2px;
-  background: var(--ink2);
-  border-radius: 2px;
-  transition: all 0.3s;
-}
-
-@media (max-width: 768px) {
-  .mobile-menu-btn {
-    display: flex;
-  }
-  
-  .status-badge {
-    display: none;
-  }
-}
-</style>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
@@ -1372,7 +29,6 @@ body.party-mode .animated-bg {
   <ul class="nav-links">
     <li><a href="#projects">Projects</a></li>
     <li><a href="#about">About</a></li>
-    <li><a href="#learning">Learning</a></li>
   </ul>
   
   <div class="status-badge">
@@ -1387,19 +43,24 @@ body.party-mode .animated-bg {
   </button>
 </nav>
 
+<!-- Mobile Navigation -->
+<div class="mobile-nav" id="mobile-nav">
+  <a href="#projects" onclick="toggleMobileMenu()">Projects</a>
+  <a href="#about" onclick="toggleMobileMenu()">About</a>
+</div>
+
 <!-- Hero Section -->
 <section class="hero">
   <div class="hero-content">
-    <div class="hero-eyebrow">Aspiring ML Engineer • Fresh Graduate</div>
+    <div class="hero-eyebrow">ML Engineer • Backend Developer • Embedded Systems</div>
     <h1 class="hero-title">
       Hi, I'm <span id="typing-text" class="typing-text"></span>
     </h1>
-    <div class="hero-subtitle">Turning data into decisions (and coffee into code)</div>
+    <div class="hero-subtitle">I build production-grade ML systems from raw data to deployed API.</div>
     <p class="hero-desc">
-      I'm a <strong>self-driven fresher</strong> building production-grade ML systems from scratch. 
-      I don't just train models — I investigate why they work, where they fail, and how to make them 
-      trustworthy. Currently obsessed with <strong>gradient boosted trees</strong> and 
-      <strong>explainable AI</strong>.
+      I build <strong>complete, production-minded ML systems</strong> — from dataset selection and feature engineering 
+      to FastAPI endpoints, PostgreSQL logging, pytest suites, and CI/CD pipelines. Every decision is documented 
+      and justified with a business reason behind it.
     </p>
     <div class="hero-cta">
       <a href="#projects" class="btn btn-primary">
@@ -1409,47 +70,40 @@ body.party-mode .animated-bg {
         <span>💻</span> GitHub
       </a>
     </div>
-    <div class="currently-vibing">
-      <span class="vibing-label">Currently Vibing To:</span>
-      <span class="vibing-content">
-        <span class="vibing-emoji">🎧</span>
-        <span id="vibing-text">Optimizing hyperparameters at 2 AM</span>
-      </span>
-    </div>
   </div>
   
   <div class="hero-visual">
     <div class="visual-card">
       <div class="visual-card-header">
-        <span class="visual-card-title">Latest Win</span>
-        <span style="font-size: 1.5rem;">🏆</span>
+        <span class="visual-card-title">PhreshCatch</span>
+        <span style="font-size: 1.5rem;">🎣</span>
       </div>
       <div class="visual-card-value">97.7%</div>
-      <div class="visual-card-desc">Phishing detection catch rate on PhreshPhish dataset</div>
+      <div class="visual-card-desc">Phishing detection catch rate on 168K test URLs</div>
+    </div>
+    
+    <div class="visual-card">
+      <div class="visual-card-header">
+        <span class="visual-card-title">Fraud Detection</span>
+        <span style="font-size: 1.5rem;">⚡</span>
+      </div>
+      <div class="visual-card-value">0.928</div>
+      <div class="visual-card-desc">PR-AUC on 1.2M transaction dataset</div>
     </div>
     
     <div class="visual-card">
       <div class="visual-card-header">
         <span class="visual-card-title">Current Stack</span>
-        <span style="font-size: 1.5rem;">⚡</span>
+        <span style="font-size: 1.5rem;">🛠️</span>
       </div>
       <div class="skill-pills">
         <span class="skill-pill">Python</span>
-        <span class="skill-pill">XGBoost</span>
         <span class="skill-pill">CatBoost</span>
+        <span class="skill-pill">XGBoost</span>
+        <span class="skill-pill">FastAPI</span>
+        <span class="skill-pill">PostgreSQL</span>
         <span class="skill-pill">SHAP</span>
         <span class="skill-pill">Optuna</span>
-        <span class="skill-pill">Streamlit</span>
-      </div>
-    </div>
-    
-    <div class="visual-card">
-      <div class="visual-card-header">
-        <span class="visual-card-title">Fun Fact</span>
-        <span style="font-size: 1.5rem;">🎯</span>
-      </div>
-      <div class="visual-card-desc" style="font-style: italic; color: var(--ink2);">
-        "I've spent more time debugging datasets than sleeping. Worth it."
       </div>
     </div>
   </div>
@@ -1460,7 +114,7 @@ body.party-mode .animated-bg {
   <div class="section-header reveal">
     <span class="section-num">01</span>
     <h2 class="section-title">Featured Projects</h2>
-    <span class="section-subtitle">5 shipped • 2 live demos • Countless lessons</span>
+    <span class="section-subtitle">5 shipped • 1 live demo • Documented failures included</span>
   </div>
   
   <div class="projects-grid">
@@ -1477,9 +131,10 @@ body.party-mode .animated-bg {
         <div class="card-body">
           <h3 class="card-title">PhreshCatch — Phishing URL Detector</h3>
           <p class="card-desc">
-            An end-to-end phishing detection system that classifies URLs in under 0.4ms using 
-            27 hand-engineered features. No page visits, no DNS lookups — just pure URL structure analysis. 
-            Built on 498K real-world URLs from Webroot telemetry.
+            An end-to-end phishing detection system that classifies URLs in 0.4ms using 
+            27 hand-engineered features. No page visits, no DNS lookups — pure URL structure analysis. 
+            Built on 498K real-world URLs from Webroot telemetry. Stress-tested with 43 attack URLs, 
+            documented 7 misses with root causes.
           </p>
           <div class="card-metrics">
             <div class="metric">
@@ -1516,11 +171,11 @@ body.party-mode .animated-bg {
         <div class="findings-title">Key Discoveries</div>
         <div class="finding">
           <span class="finding-num">01</span>
-          <span>Found data leakage in PhiUSIIL — URLSimilarityIndex was a label proxy, not a feature. Dropped immediately.</span>
+          <span>Found data leakage in PhiUSIIL — URLSimilarityIndex was a label proxy, not a feature. Dataset abandoned.</span>
         </div>
         <div class="finding">
           <span class="finding-num">02</span>
-          <span>Same model: 99% accuracy on its own test set, 23% recall on ISCX-2016. Classic domain shift collapse.</span>
+          <span>Same model: 99% accuracy on its own test set, 23% recall on ISCX-2016. Complete domain shift collapse.</span>
         </div>
         <div class="finding">
           <span class="finding-num">03</span>
@@ -1534,14 +189,16 @@ body.party-mode .animated-bg {
       <div class="card-header">
         <div class="card-icon" style="background: linear-gradient(135deg, #f59e0b, #ef4444);">⚡</div>
         <div class="card-badges">
+          <span class="badge badge-production">Production API</span>
           <span class="badge badge-ml">Fintech ML</span>
         </div>
       </div>
       <div class="card-body">
-        <h3 class="card-title">Credit Card Fraud Detection</h3>
+        <h3 class="card-title">FraudShield — Credit Card Fraud Detection</h3>
         <p class="card-desc">
-          Detecting fraud in 1.2M transactions with 0.6% fraud rate. Diagnosed why XGBoost failed 
-          (encoding drift), switched to CatBoost, improved PR-AUC from 0.67 to 0.93.
+          A production-ready fraud detection system processing 1.2M transactions with 40+ domain-engineered 
+          features. Full REST API with PostgreSQL logging, 17 pytest tests, and GitHub Actions CI/CD. 
+          Threshold optimized using LexisNexis 2024 research — not assumptions.
         </p>
         <div class="card-metrics">
           <div class="metric">
@@ -1552,16 +209,25 @@ body.party-mode .animated-bg {
             <span class="metric-label">Fraud Recall</span>
             <span class="metric-value">89%</span>
           </div>
+          <div class="metric">
+            <span class="metric-label">Val→Test Gap</span>
+            <span class="metric-value">0.028</span>
+          </div>
         </div>
         <div class="card-tags">
           <span class="tag">CatBoost</span>
+          <span class="tag">FastAPI</span>
+          <span class="tag">PostgreSQL</span>
+          <span class="tag">CI/CD</span>
           <span class="tag">Imbalanced Data</span>
-          <span class="tag">Time-Series Split</span>
         </div>
       </div>
       <div class="card-footer">
         <a href="https://github.com/mallapuabhiraj/fraud-detection-catboost" target="_blank" class="card-link primary">
           <span>💻</span> View Project
+        </a>
+        <a href="https://github.com/mallapuabhiraj/fraud-detection-catboost/actions" target="_blank" class="card-link">
+          <span>🔄</span> CI/CD
         </a>
       </div>
     </div>
@@ -1575,10 +241,11 @@ body.party-mode .animated-bg {
         </div>
       </div>
       <div class="card-body">
-        <h3 class="card-title">Heart Disease Prediction</h3>
+        <h3 class="card-title">Heart Disease Risk Predictor</h3>
         <p class="card-desc">
-          Clinical ML pipeline with threshold-tuned SVM for ≥90% recall. Engineered 10 features — 
-          2 of top 3 SHAP predictors were hand-crafted. Because missed diagnoses cost lives.
+          Clinical ML pipeline with safety-constrained threshold tuning for ≥90% recall. 
+          Engineered 10 features — 2 of top 3 SHAP predictors were hand-crafted. 
+          Because missed diagnoses cost lives.
         </p>
         <div class="card-metrics">
           <div class="metric">
@@ -1589,18 +256,20 @@ body.party-mode .animated-bg {
             <span class="metric-label">False Negatives</span>
             <span class="metric-value">3 on 61 tests</span>
           </div>
+          <div class="metric">
+            <span class="metric-label">Model</span>
+            <span class="metric-value">SVM</span>
+          </div>
         </div>
         <div class="card-tags">
           <span class="tag">SVM</span>
           <span class="tag">Clinical Features</span>
           <span class="tag">Threshold Tuning</span>
+          <span class="tag">SHAP</span>
         </div>
       </div>
       <div class="card-footer">
-        <a href="https://colab.research.google.com/drive/1ja3Nq4JUDv1eladVbhZSnpZe6oavZO7B" target="_blank" class="card-link primary">
-          <span>📓</span> Colab
-        </a>
-        <a href="https://github.com/mallapuabhiraj/heart-disease-prediction" target="_blank" class="card-link">
+        <a href="https://github.com/mallapuabhiraj/heart-disease-prediction" target="_blank" class="card-link primary">
           <span>💻</span> GitHub
         </a>
       </div>
@@ -1609,7 +278,7 @@ body.party-mode .animated-bg {
     <!-- Solar Tracker -->
     <div class="project-card reveal">
       <div class="card-header">
-        <div class="card-icon" style="background: linear-gradient(135deg, #10b981, #3b82f6);">☀️</div>
+        <div class="card-icon" style="background: linear-gradient(135deg, #10b981, #3b82f6);"></div>
         <div class="card-badges">
           <span class="badge badge-ml" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b; border-color: rgba(245, 158, 11, 0.3);">IoT</span>
         </div>
@@ -1617,13 +286,17 @@ body.party-mode .animated-bg {
       <div class="card-body">
         <h3 class="card-title">Single-Axis Solar Tracker</h3>
         <p class="card-desc">
-          Arduino prototype with dual LDR sensors and feedback control. Extends peak generation 
-          from 2-3 hours to ~10 hours. Built for under ₹1,200.
+          Arduino prototype with dual LDR sensors and closed-loop feedback control. Extends peak generation 
+          from 2-3 hours to ~10 hours. Full 180° sunlight tracking arc. Built for under ₹1,200.
         </p>
         <div class="card-metrics">
           <div class="metric">
             <span class="metric-label">Energy Gain</span>
-            <span class="metric-value">+30-40%</span>
+            <span class="metric-value">+25-40%</span>
+          </div>
+          <div class="metric">
+            <span class="metric-label">Power Boost</span>
+            <span class="metric-value">+20-30%</span>
           </div>
           <div class="metric">
             <span class="metric-label">Build Cost</span>
@@ -1634,6 +307,7 @@ body.party-mode .animated-bg {
           <span class="tag">Arduino</span>
           <span class="tag">C++</span>
           <span class="tag">PWM Control</span>
+          <span class="tag">Closed-Loop</span>
         </div>
       </div>
       <div class="card-footer">
@@ -1646,21 +320,22 @@ body.party-mode .animated-bg {
     <!-- Gas Leakage -->
     <div class="project-card reveal">
       <div class="card-header">
-        <div class="card-icon" style="background: linear-gradient(135deg, #ef4444, #f97316);">🔴</div>
+        <div class="card-icon" style="background: linear-gradient(135deg, #ef4444, #f97316);"></div>
         <div class="card-badges">
           <span class="badge badge-ml" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b; border-color: rgba(245, 158, 11, 0.3);">IoT</span>
         </div>
       </div>
       <div class="card-body">
-        <h3 class="card-title">Gas Leakage Detection</h3>
+        <h3 class="card-title">Gas Leakage Detection & Protection</h3>
         <p class="card-desc">
-          Automatic detection & valve control with adaptive calibration. Reacts in <500ms. 
-          Lesson learned: Hardcoded thresholds fail in different rooms. Always calibrate.
+          Automatic detection & valve control with adaptive calibration. Reacts in <500ms within 100cm. 
+          Key lesson: Hardcoded thresholds fail in different environments. Built adaptive threshold 
+          calibration based on ambient baseline readings.
         </p>
         <div class="card-metrics">
           <div class="metric">
             <span class="metric-label">Response Time</span>
-            <span class="metric-value">&lt;500ms</span>
+            <span class="metric-value"><500ms</span>
           </div>
           <div class="metric">
             <span class="metric-label">Calibration</span>
@@ -1670,6 +345,7 @@ body.party-mode .animated-bg {
         <div class="card-tags">
           <span class="tag">Arduino</span>
           <span class="tag">MQ-135</span>
+          <span class="tag">Servo Control</span>
           <span class="tag">Safety Systems</span>
         </div>
       </div>
@@ -1693,10 +369,10 @@ body.party-mode .animated-bg {
     <div class="about-card reveal">
       <div class="about-avatar">AR</div>
       <div class="about-name">Abhi Raju Mallapu</div>
-      <div class="about-role">Aspiring ML Engineer</div>
+      <div class="about-role">ML Engineer</div>
       <p class="about-bio-text">
-        Fresh graduate with an obsession for building things that actually work. 
-        I break models to understand them better.
+        B.Tech EEE graduate from SVUCE Tirupati. I build production-grade ML systems 
+        and document failures as carefully as wins.
       </p>
       <div class="contact-links">
         <a href="mailto:abhirajmallapu@gmail.com" class="contact-link">
@@ -1717,29 +393,32 @@ body.party-mode .animated-bg {
     <div class="about-main">
       <div class="bio-section reveal">
         <p class="bio-text">
-          I'm a <strong>fresher engineer</strong> with a genuine obsession for machine learning done right. 
-          While most beginners stop at Kaggle accuracy scores, I dig into <strong>why models work, 
-          where they break, and what that means in the real world</strong>. My projects document 
-          failures as carefully as successes — because honest engineering builds trustworthy systems.
+          I build <strong>complete ML systems</strong> — from dataset selection and feature engineering 
+          to FastAPI endpoints, PostgreSQL logging, pytest suites, and CI/CD pipelines. Every decision 
+          is documented and justified with a business reason behind it.
         </p>
         <p class="bio-text">
-          I've built across the full ML stack: <strong>tabular ML</strong> with gradient boosted trees, 
-          <strong>clinical AI</strong> with safety-constrained optimization, <strong>security ML</strong> 
-          with adversarial dataset investigation, and <strong>embedded IoT systems</strong> with 
-          real-time feedback control. Every project is end-to-end — from raw data to deployed application.
+          I've built across the full stack: <strong>tabular ML</strong> with gradient boosted trees and 
+          Optuna tuning, <strong>security ML</strong> with SHAP explainability, <strong>REST APIs</strong> 
+          with FastAPI and SQLAlchemy, and <strong>embedded IoT systems</strong> with real-time feedback control.
+        </p>
+        <p class="bio-text">
+          I <strong>document failures as carefully as wins</strong> — because honest engineering builds 
+          trustworthy systems. Abandoned 2 datasets after finding construction flaws. Diagnosed encoding 
+          leaks and cross-dataset collapse. Every mistake taught me something that made the next system better.
         </p>
       </div>
       
       <div class="skills-section reveal">
-        <div class="skills-title">Skills Confidence Meter</div>
+        <div class="skills-title">Technical Skills</div>
         <div class="skills-grid">
           <div>
             <div class="skill-category">
               <div class="skill-category-title">Machine Learning</div>
               <div class="skill-item">
                 <div class="skill-header">
-                  <span>XGBoost / CatBoost</span>
-                  <span>85%</span>
+                  <span>CatBoost / XGBoost / LightGBM</span>
+                  <span>Intermediate</span>
                 </div>
                 <div class="skill-bar">
                   <div class="skill-fill" style="width: 0%" data-width="85%"></div>
@@ -1748,7 +427,7 @@ body.party-mode .animated-bg {
               <div class="skill-item">
                 <div class="skill-header">
                   <span>Feature Engineering</span>
-                  <span>80%</span>
+                  <span>Intermediate</span>
                 </div>
                 <div class="skill-bar">
                   <div class="skill-fill" style="width: 0%" data-width="80%"></div>
@@ -1756,31 +435,49 @@ body.party-mode .animated-bg {
               </div>
               <div class="skill-item">
                 <div class="skill-header">
-                  <span>SHAP / Explainability</span>
-                  <span>75%</span>
+                  <span>Optuna / Hyperparameter Tuning</span>
+                  <span>Intermediate</span>
                 </div>
                 <div class="skill-bar">
                   <div class="skill-fill" style="width: 0%" data-width="75%"></div>
+                </div>
+              </div>
+              <div class="skill-item">
+                <div class="skill-header">
+                  <span>SHAP / Explainability</span>
+                  <span>Intermediate</span>
+                </div>
+                <div class="skill-bar">
+                  <div class="skill-fill" style="width: 0%" data-width="70%"></div>
                 </div>
               </div>
             </div>
           </div>
           <div>
             <div class="skill-category">
-              <div class="skill-category-title">Engineering</div>
+              <div class="skill-category-title">Production Engineering</div>
               <div class="skill-item">
                 <div class="skill-header">
-                  <span>Python</span>
-                  <span>90%</span>
+                  <span>Python / Pandas / NumPy</span>
+                  <span>Intermediate</span>
                 </div>
                 <div class="skill-bar">
-                  <div class="skill-fill" style="width: 0%" data-width="90%"></div>
+                  <div class="skill-fill" style="width: 0%" data-width="85%"></div>
                 </div>
               </div>
               <div class="skill-item">
                 <div class="skill-header">
-                  <span>Streamlit / Deployment</span>
-                  <span>70%</span>
+                  <span>FastAPI / SQLAlchemy</span>
+                  <span>Intermediate</span>
+                </div>
+                <div class="skill-bar">
+                  <div class="skill-fill" style="width: 0%" data-width="75%"></div>
+                </div>
+              </div>
+              <div class="skill-item">
+                <div class="skill-header">
+                  <span>PostgreSQL / Database Design</span>
+                  <span>Intermediate</span>
                 </div>
                 <div class="skill-bar">
                   <div class="skill-fill" style="width: 0%" data-width="70%"></div>
@@ -1788,19 +485,15 @@ body.party-mode .animated-bg {
               </div>
               <div class="skill-item">
                 <div class="skill-header">
-                  <span>Arduino / Embedded</span>
-                  <span>75%</span>
+                  <span>pytest / CI/CD / GitHub Actions</span>
+                  <span>Intermediate</span>
                 </div>
                 <div class="skill-bar">
-                  <div class="skill-fill" style="width: 0%" data-width="75%"></div>
+                  <div class="skill-fill" style="width: 0%" data-width="65%"></div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="confidence-note">
-          💡 These are honest self-assessments. As a fresher, I'm constantly learning and these numbers 
-          represent my current confidence levels, not expertise claims!
         </div>
       </div>
       
@@ -1809,119 +502,41 @@ body.party-mode .animated-bg {
         <div class="bug-title">
           <span>🐛</span> Bug Journal
         </div>
-        <div class="bug-subtitle">"Mistakes I've made so you don't have to" — A fresher's guide to learning the hard way</div>
+        <div class="bug-subtitle">Mistakes I've made so you don't have to — documented failures that made me a better engineer</div>
         <div class="bug-entries">
           <div class="bug-card">
             <div class="bug-emoji">🎯</div>
-            <div class="bug-name">The "Perfect Accuracy" Trap</div>
+            <div class="bug-name">The Perfect Accuracy Trap</div>
             <div class="bug-lesson">
-              Achieved 99% accuracy on PhiUSIIL. Turns out, I had data leakage. 
-              Now I always check feature-target correlations first.
+              99% accuracy on PhiUSIIL. URLSimilarityIndex scored exactly 100.0 for every legitimate URL — 
+              a label proxy, not a feature. Dataset abandoned immediately.
             </div>
           </div>
           <div class="bug-card">
             <div class="bug-emoji">⏰</div>
             <div class="bug-name">The Time Travel Mistake</div>
             <div class="bug-lesson">
-              Used random split on time-series fraud data. Model saw the future. 
-              Always use TimeSeriesSplit for temporal data!
+              Random split on fraud temporal data. Model saw the future. 
+              Now I always use time-based splits for temporal data.
             </div>
           </div>
           <div class="bug-card">
             <div class="bug-emoji">🔥</div>
-            <div class="bug-name">The Overfitting Odyssey</div>
+            <div class="bug-name">The Encoding Leak</div>
             <div class="bug-lesson">
-              Spent 3 days tuning XGBoost only to realize CatBoost handled 
-              categorical features natively. Sometimes simpler is better.
+              LOO encoding leaked future fraud stats into training. Val→test gap was 0.11. 
+              CatBoost's ordered target statistics dropped it to 0.028.
+            </div>
+          </div>
+          <div class="bug-card">
+            <div class="bug-emoji">📊</div>
+            <div class="bug-name">The Wrong Dataset Choice</div>
+            <div class="bug-lesson">
+              V1-V28 anonymized data — no lat/long, no merchant, no timestamps. 
+              No feature engineering possible. Switched to Sparkov with raw transaction fields.
             </div>
           </div>
         </div>
-      </div>
-      
-      <!-- Ask Me About -->
-      <div class="ask-section reveal">
-        <div class="skills-title">Ask Me About</div>
-        <div class="ask-grid">
-          <div class="ask-card">
-            <div class="ask-front">
-              <div class="ask-emoji">🌳</div>
-              <div class="ask-label">Gradient Boosting</div>
-            </div>
-            <div class="ask-back">
-              "Why XGBoost is my comfort zone and CatBoost is my new best friend"
-            </div>
-          </div>
-          <div class="ask-card">
-            <div class="ask-front">
-              <div class="ask-emoji">🔍</div>
-              <div class="ask-label">Feature Engineering</div>
-            </div>
-            <div class="ask-back">
-              "The art of turning 'URL length' into a phishing detector"
-            </div>
-          </div>
-          <div class="ask-card">
-            <div class="ask-front">
-              <div class="ask-emoji">⚖️</div>
-              <div class="ask-label">Imbalanced Data</div>
-            </div>
-            <div class="ask-back">
-              "When 99% accuracy means you're failing spectacularly"
-            </div>
-          </div>
-          <div class="ask-card">
-            <div class="ask-front">
-              <div class="ask-emoji">🎮</div>
-              <div class="ask-label">Arduino Hacks</div>
-            </div>
-            <div class="ask-back">
-              "From gas sensors to solar trackers on a student budget"
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Learning Log Section -->
-<section id="learning">
-  <div class="section-header reveal">
-    <span class="section-num">03</span>
-    <h2 class="section-title">Learning Log</h2>
-    <span class="section-subtitle">Recent discoveries & ongoing explorations</span>
-  </div>
-  
-  <div class="learning-log reveal">
-    <div class="log-title">📚 What I'm Currently Exploring</div>
-    <div class="log-entries">
-      <div class="log-entry">
-        <span class="log-date">This Week</span>
-        <span class="log-content">
-          <strong>Deep diving into SHAP values</strong> — Understanding how to explain model predictions 
-          to non-technical stakeholders. Turns out, "feature importance" isn't enough.
-        </span>
-      </div>
-      <div class="log-entry">
-        <span class="log-date">Last Week</span>
-        <span class="log-content">
-          <strong>Experimenting with Optuna</strong> — Automated hyperparameter tuning is a game changer. 
-          No more grid search guesswork!
-        </span>
-      </div>
-      <div class="log-entry">
-        <span class="log-date">Ongoing</span>
-        <span class="log-content">
-          <strong>Learning MLOps basics</strong> — Docker, model versioning, and deployment pipelines. 
-          Because training is only 20% of the job.
-        </span>
-      </div>
-      <div class="log-entry">
-        <span class="log-date">Next Up</span>
-        <span class="log-content">
-          <strong>NLP with Transformers</strong> — Want to add a text classification project to the mix. 
-          BERT, here I come!
-        </span>
       </div>
     </div>
   </div>
@@ -1930,8 +545,8 @@ body.party-mode .animated-bg {
 <!-- Footer -->
 <footer>
   <div class="footer-content">
-    <div class="footer-tagline">Let's build something weird and wonderful together</div>
-    <div class="footer-subtitle">(Or at least debug it together at 2 AM)</div>
+    <div class="footer-tagline">Let's build production-grade systems together</div>
+    <div class="footer-subtitle">Open to ML Engineering · Backend SDE · Embedded Systems roles</div>
     <div class="footer-links">
       <a href="https://github.com/mallapuabhiraj" target="_blank" class="footer-link">
         <span>💻</span> GitHub
@@ -1947,194 +562,11 @@ body.party-mode .animated-bg {
       </a>
     </div>
     <div class="footer-copy">
-      Made with <span class="coffee-emoji">☕</span> excessive amounts of caffeine and genuine curiosity
+      Abhi Raju Mallapu — ML Engineer · Tirupati, India
     </div>
   </div>
 </footer>
 
-<script>
-// Typing Effect
-const text = "Abhi Raju Mallapu";
-const typingElement = document.getElementById('typing-text');
-let index = 0;
-
-function typeText() {
-  if (index < text.length) {
-    typingElement.textContent += text.charAt(index);
-    index++;
-    setTimeout(typeText, 100);
-  } else {
-    setTimeout(() => {
-      typingElement.style.borderRight = 'none';
-    }, 1000);
-  }
-}
-
-// Start typing after a delay
-setTimeout(typeText, 500);
-
-// Rotating "Currently Vibing" text
-const vibingTexts = [
-  "Optimizing hyperparameters at 2 AM",
-  "Explaining SHAP values to my plants",
-  "Debugging why my model predicts 'potato' for everything",
-  "Learning that 'just one more epoch' is a lie",
-  "Turning coffee into gradient descent"
-];
-
-let vibingIndex = 0;
-const vibingElement = document.getElementById('vibing-text');
-
-setInterval(() => {
-  vibingIndex = (vibingIndex + 1) % vibingTexts.length;
-  vibingElement.style.opacity = 0;
-  setTimeout(() => {
-    vibingElement.textContent = vibingTexts[vibingIndex];
-    vibingElement.style.opacity = 1;
-  }, 300);
-}, 4000);
-
-// Custom Cursor
-const cursor = document.getElementById('cursor');
-let mouseX = 0, mouseY = 0;
-let cursorX = 0, cursorY = 0;
-
-document.addEventListener('mousemove', (e) => {
-  mouseX = e.clientX;
-  mouseY = e.clientY;
-});
-
-function animateCursor() {
-  cursorX += (mouseX - cursorX) * 0.1;
-  cursorY += (mouseY - cursorY) * 0.1;
-  cursor.style.left = cursorX - 10 + 'px';
-  cursor.style.top = cursorY - 10 + 'px';
-  requestAnimationFrame(animateCursor);
-}
-
-animateCursor();
-
-// Hover effect for cursor
-const interactiveElements = document.querySelectorAll('a, button, .project-card, .ask-card, .bug-card, .log-entry');
-interactiveElements.forEach(el => {
-  el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-  el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-});
-
-// Floating Particles
-const particlesContainer = document.getElementById('particles');
-const emojis = ['🧮', '📊', '🔢', '🤖', '⚡', '🎯', '🔍', '📈', '🎣', '🛡️', '💻', '🔬'];
-
-for (let i = 0; i < 15; i++) {
-  const particle = document.createElement('div');
-  particle.className = 'particle';
-  particle.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-  particle.style.left = Math.random() * 100 + '%';
-  particle.style.top = Math.random() * 100 + '%';
-  particle.style.animationDelay = Math.random() * 15 + 's';
-  particle.style.fontSize = (Math.random() * 1 + 0.8) + 'rem';
-  particlesContainer.appendChild(particle);
-}
-
-// Scroll Reveal
-const reveals = document.querySelectorAll('.reveal');
-const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('active');
-      
-      // Animate skill bars if this is the skills section
-      const skillFills = entry.target.querySelectorAll('.skill-fill');
-      skillFills.forEach(fill => {
-        const width = fill.getAttribute('data-width');
-        setTimeout(() => {
-          fill.style.width = width;
-        }, 200);
-      });
-    }
-  });
-}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-
-reveals.forEach(el => revealObserver.observe(el));
-
-// Party Mode Easter Egg
-let partyMode = false;
-function togglePartyMode() {
-  partyMode = !partyMode;
-  document.body.classList.toggle('party-mode');
-  
-  if (partyMode) {
-    // Create confetti effect
-    for (let i = 0; i < 50; i++) {
-      createConfetti();
-    }
-  }
-}
-
-function createConfetti() {
-  const confetti = document.createElement('div');
-  confetti.style.position = 'fixed';
-  confetti.style.width = '10px';
-  confetti.style.height = '10px';
-  confetti.style.background = ['#ff0', '#f0f', '#0ff', '#0f0', '#f00', '#00f'][Math.floor(Math.random() * 6)];
-  confetti.style.left = Math.random() * 100 + 'vw';
-  confetti.style.top = '-10px';
-  confetti.style.borderRadius = '50%';
-  confetti.style.zIndex = '9999';
-  confetti.style.pointerEvents = 'none';
-  document.body.appendChild(confetti);
-  
-  let pos = -10;
-  let speed = Math.random() * 3 + 2;
-  let wobble = Math.random() * 2 - 1;
-  
-  function fall() {
-    pos += speed;
-    confetti.style.top = pos + 'px';
-    confetti.style.left = parseFloat(confetti.style.left) + wobble + 'px';
-    confetti.style.transform = `rotate(${pos}deg)`;
-    
-    if (pos < window.innerHeight) {
-      requestAnimationFrame(fall);
-    } else {
-      confetti.remove();
-    }
-  }
-  
-  fall();
-}
-
-// Smooth scroll for nav links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function (e) {
-    e.preventDefault();
-    const target = document.querySelector(this.getAttribute('href'));
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  });
-});
-
-// Hide cursor on mobile
-if ('ontouchstart' in window) {
-  cursor.style.display = 'none';
-}
-
-// Mobile menu toggle
-function toggleMobileMenu() {
-  // Simple alert for now - can be expanded to full mobile menu
-  alert('Mobile menu coming soon! 📱');
-}
-
-// Add hover effect to nav logo
-const navLogo = document.querySelector('.nav-logo');
-navLogo.addEventListener('mouseenter', () => {
-  navLogo.style.transform = 'scale(1.05) rotate(-2deg)';
-});
-navLogo.addEventListener('mouseleave', () => {
-  navLogo.style.transform = 'scale(1) rotate(0deg)';
-});
-</script>
-
+<script src="script.js"></script>
 </body>
-  </html>
+</html>
