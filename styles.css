@@ -580,6 +580,7 @@ section {
 }
 
 .project-card.featured {
+  padding: 0;
   grid-column: 1 / -1;
   display: grid;
   grid-template-columns: 2fr 1fr;
