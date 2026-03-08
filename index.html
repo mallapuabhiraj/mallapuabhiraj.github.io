@@ -1,23 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Abhi Raju Mallapu — Aspiring ML Engineer</title>
+<title>Abhi Raju Mallapu — ML Engineer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<!-- Animated Background -->
-<div class="animated-bg"></div>
+<!-- Custom Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-follower" id="cursor-follower"></div>
+
+<!-- Theme Toggle -->
+<button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+  <span class="theme-icon">🌙</span>
+</button>
 
 <!-- Floating Particles -->
 <div class="particles" id="particles"></div>
-
-<!-- Custom Cursor -->
-<div class="cursor" id="cursor"></div>
 
 <!-- Navigation -->
 <nav>
@@ -29,6 +32,7 @@
   <ul class="nav-links">
     <li><a href="#projects">Projects</a></li>
     <li><a href="#about">About</a></li>
+    <li><a href="#bugs">Bug Journal</a></li>
   </ul>
   
   <div class="status-badge">
@@ -36,7 +40,7 @@
     Open to Opportunities
   </div>
   
-  <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+  <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Menu">
     <span></span>
     <span></span>
     <span></span>
@@ -47,63 +51,75 @@
 <div class="mobile-nav" id="mobile-nav">
   <a href="#projects" onclick="toggleMobileMenu()">Projects</a>
   <a href="#about" onclick="toggleMobileMenu()">About</a>
+  <a href="#bugs" onclick="toggleMobileMenu()">Bug Journal</a>
 </div>
 
-<!-- Hero Section -->
+<!-- Hero Section - IDE Aesthetic -->
 <section class="hero">
-  <div class="hero-content">
-    <div class="hero-eyebrow">ML Engineer • Backend Developer • Embedded Engineer</div>
-    <h1 class="hero-title">
-      Hi, I'm <span id="typing-text" class="typing-text"></span>
-    </h1>
-    <div class="hero-subtitle">I build production-grade ML systems from raw data to deployed API.</div>
-    <p class="hero-desc">
-      I build <strong>complete, production-minded ML systems</strong> — from dataset selection and feature engineering 
-      to FastAPI endpoints, PostgreSQL logging, pytest suites, and CI/CD pipelines. Every decision is documented 
-      and justified with a business reason behind it.
-    </p>
-    <div class="hero-cta">
-      <a href="#projects" class="btn btn-primary">
-        <span>🚀</span> See My Work
-      </a>
-      <a href="https://github.com/mallapuabhiraj" target="_blank" class="btn btn-secondary">
-        <span>💻</span> GitHub
-      </a>
+  <div class="ide-window">
+    <div class="ide-header">
+      <div class="ide-dots">
+        <span class="ide-dot red" onclick="createConfetti()" title="Click for confetti!"></span>
+        <span class="ide-dot yellow" onclick="togglePartyMode()" title="Toggle party mode!"></span>
+        <span class="ide-dot green" onclick="scrollToProjects()" title="Scroll to projects"></span>
+      </div>
+      <div class="ide-title">portfolio.tsx — Abhi Raju</div>
+      <div class="ide-actions">✕</div>
+    </div>
+    <div class="ide-content">
+      <div class="ide-line-numbers">
+        <span>1</span>
+        <span>2</span>
+        <span>3</span>
+        <span>4</span>
+        <span>5</span>
+        <span>6</span>
+        <span>7</span>
+        <span>8</span>
+        <span>9</span>
+        <span>10</span>
+        <span>11</span>
+        <span>12</span>
+      </div>
+      <div class="ide-code">
+        <div class="code-line"><span class="comment">// Now entering Abhi Raju Mallapu</span></div>
+        <div class="code-line"><span class="keyword">import</span> { <span class="string">"ML Engineer"</span>, <span class="string">"Backend Dev"</span> } <span class="keyword">from</span> <span class="string">"@abhiraj"</span>;</div>
+        <div class="code-line"></div>
+        <div class="code-line"><span class="keyword">const</span> <span class="function">intro</span> = () => {</div>
+        <div class="code-line">&nbsp;&nbsp;<span class="keyword">return</span> {</div>
+        <div class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;name: <span class="string">"Abhi Raju Mallapu"</span>,</div>
+        <div class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;role: <span class="string" id="typing-text"></span><span class="cursor-blink">|</span>,</div>
+        <div class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;location: <span class="string">"Tirupati, India"</span>,</div>
+        <div class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;status: <span class="string">"Open to opportunities"</span></div>
+        <div class="code-line">&nbsp;&nbsp;};</div>
+        <div class="code-line">};</div>
+        <div class="code-line"></div>
+        <div class="code-line"><span class="comment">// Building production-grade ML systems...</span></div>
+      </div>
     </div>
   </div>
   
-  <div class="hero-visual">
-    <div class="visual-card">
-      <div class="visual-card-header">
-        <span class="visual-card-title">PhreshCatch</span>
-        <span style="font-size: 1.5rem;">🎣</span>
-      </div>
-      <div class="visual-card-value">97.7%</div>
-      <div class="visual-card-desc">Phishing detection catch rate on 168K test URLs</div>
+  <div class="hero-sidebar">
+    <div class="fun-facts" id="fun-facts">
+      <div class="fun-fact active">🎯 Once debugged for 6 hours only to find a missing comma</div>
+      <div class="fun-fact">☕ Survives on coffee and Stack Overflow</div>
+      <div class="fun-fact">🐛 Documents bugs more carefully than wins</div>
+      <div class="fun-fact">⚡ Can explain XGBoost to my grandmother</div>
+      <div class="fun-fact">🎣 Caught 97.7% of phishing URLs (and 100% of fish)</div>
     </div>
     
-    <div class="visual-card">
-      <div class="visual-card-header">
-        <span class="visual-card-title">Fraud Detection</span>
-        <span style="font-size: 1.5rem;">⚡</span>
+    <div class="quick-stats">
+      <div class="stat-card">
+        <span class="stat-num">5</span>
+        <span class="stat-label">Projects Shipped</span>
       </div>
-      <div class="visual-card-value">0.928</div>
-      <div class="visual-card-desc">PR-AUC on 1.2M transaction dataset</div>
-    </div>
-    
-    <div class="visual-card">
-      <div class="visual-card-header">
-        <span class="visual-card-title">Current Stack</span>
-        <span style="font-size: 1.5rem;">🛠️</span>
+      <div class="stat-card">
+        <span class="stat-num">168K</span>
+        <span class="stat-label">URLs Analyzed</span>
       </div>
-      <div class="skill-pills">
-        <span class="skill-pill">Python</span>
-        <span class="skill-pill">CatBoost</span>
-        <span class="skill-pill">XGBoost</span>
-        <span class="skill-pill">FastAPI</span>
-        <span class="skill-pill">PostgreSQL</span>
-        <span class="skill-pill">SHAP</span>
-        <span class="skill-pill">Optuna</span>
+      <div class="stat-card">
+        <span class="stat-num">1.2M</span>
+        <span class="stat-label">Transactions Processed</span>
       </div>
     </div>
   </div>
@@ -114,13 +130,13 @@
   <div class="section-header reveal">
     <span class="section-num">01</span>
     <h2 class="section-title">Featured Projects</h2>
-    <span class="section-subtitle">5 shipped • 1 live demo • Documented failures included</span>
+    <span class="section-subtitle">Production-grade systems with documented failures</span>
   </div>
   
   <div class="projects-grid">
     <!-- PhreshCatch Featured -->
     <div class="project-card featured reveal">
-      <div>
+      <div class="card-main">
         <div class="card-header">
           <div class="card-icon">🎣</div>
           <div class="card-badges">
@@ -133,8 +149,7 @@
           <p class="card-desc">
             An end-to-end phishing detection system that classifies URLs in 0.4ms using 
             27 hand-engineered features. No page visits, no DNS lookups — pure URL structure analysis. 
-            Built on 498K real-world URLs from Webroot telemetry. Stress-tested with 43 attack URLs, 
-            documented 7 misses with root causes.
+            Built on 498K real-world URLs from Webroot telemetry.
           </p>
           <div class="card-metrics">
             <div class="metric">
@@ -184,21 +199,21 @@
       </div>
     </div>
     
-    <!-- Fraud Detection -->
+    <!-- PayProtect (Renamed from FraudShield) -->
     <div class="project-card reveal">
       <div class="card-header">
-        <div class="card-icon" style="background: linear-gradient(135deg, #f59e0b, #ef4444);">&#x1F575;</div>
+        <div class="card-icon" style="background: linear-gradient(135deg, #f59e0b, #ef4444);">🛡️</div>
         <div class="card-badges">
           <span class="badge badge-production">Production API</span>
           <span class="badge badge-ml">Fintech ML</span>
         </div>
       </div>
       <div class="card-body">
-        <h3 class="card-title">FraudShield — Credit Card Fraud Detection</h3>
+        <h3 class="card-title">PayProtect — Credit Card Fraud Detection</h3>
         <p class="card-desc">
           A production-ready fraud detection system processing 1.2M transactions with 40+ domain-engineered 
           features. Full REST API with PostgreSQL logging, 17 pytest tests, and GitHub Actions CI/CD. 
-          Threshold optimized using LexisNexis 2024 research — not assumptions.
+          Threshold optimized using LexisNexis 2024 research.
         </p>
         <div class="card-metrics">
           <div class="metric">
@@ -210,8 +225,8 @@
             <span class="metric-value">89%</span>
           </div>
           <div class="metric">
-            <span class="metric-label">Val→Test Gap</span>
-            <span class="metric-value">0.028</span>
+            <span class="metric-label">Status</span>
+            <span class="metric-value">API runs locally</span>
           </div>
         </div>
         <div class="card-tags">
@@ -224,10 +239,10 @@
       </div>
       <div class="card-footer">
         <a href="https://github.com/mallapuabhiraj/fraud-detection-catboost" target="_blank" class="card-link primary">
-          <span>💻</span> Github
+          <span>💻</span> View Project
         </a>
         <a href="https://github.com/mallapuabhiraj/fraud-detection-catboost/actions" target="_blank" class="card-link">
-          <span>🔄</span> CI/CD Pipeline
+          <span>🔄</span> CI/CD
         </a>
       </div>
     </div>
@@ -235,7 +250,7 @@
     <!-- Heart Disease -->
     <div class="project-card reveal">
       <div class="card-header">
-        <div class="card-icon" style="background: linear-gradient(135deg, #ec4899, #8b5cf6);">&#x1FA7A;</div>
+        <div class="card-icon" style="background: linear-gradient(135deg, #ec4899, #8b5cf6);">🫀</div>
         <div class="card-badges">
           <span class="badge badge-ml">Healthcare</span>
         </div>
@@ -278,7 +293,7 @@
     <!-- Solar Tracker -->
     <div class="project-card reveal">
       <div class="card-header">
-        <div class="card-icon" style="background: linear-gradient(135deg, #10b981, #3b82f6);">&#x2600;</div>
+        <div class="card-icon" style="background: linear-gradient(135deg, #10b981, #3b82f6);">☀️</div>
         <div class="card-badges">
           <span class="badge badge-ml" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b; border-color: rgba(245, 158, 11, 0.3);">IoT</span>
         </div>
@@ -320,7 +335,7 @@
     <!-- Gas Leakage -->
     <div class="project-card reveal">
       <div class="card-header">
-        <div class="card-icon" style="background: linear-gradient(135deg, #ef4444, #f97316);">&#x1F6A8;</div>
+        <div class="card-icon" style="background: linear-gradient(135deg, #ef4444, #f97316);">🔥</div>
         <div class="card-badges">
           <span class="badge badge-ml" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b; border-color: rgba(245, 158, 11, 0.3);">IoT</span>
         </div>
@@ -367,7 +382,7 @@
   
   <div class="about-grid">
     <div class="about-card reveal">
-      <div class="about-avatar">AR</div>
+      <div class="about-avatar" onclick="burstConfetti(event)">AR</div>
       <div class="about-name">Abhi Raju Mallapu</div>
       <div class="about-role">ML Engineer</div>
       <p class="about-bio-text">
@@ -410,7 +425,7 @@
       </div>
       
       <div class="skills-section reveal">
-        <div class="skills-title">&#x1F3C6; Technical Skills</div>
+        <div class="skills-title">Technical Skills</div>
         <div class="skills-grid">
           <div>
             <div class="skill-category">
@@ -418,7 +433,7 @@
               <div class="skill-item">
                 <div class="skill-header">
                   <span>CatBoost / XGBoost / LightGBM</span>
-                  <span>Proficient</span>
+                  <span>Proficient in</span>
                 </div>
                 <div class="skill-bar">
                   <div class="skill-fill" style="width: 0%" data-width="85%"></div>
@@ -427,7 +442,7 @@
               <div class="skill-item">
                 <div class="skill-header">
                   <span>Feature Engineering</span>
-                  <span>Intermediate</span>
+                  <span>Comfortable with</span>
                 </div>
                 <div class="skill-bar">
                   <div class="skill-fill" style="width: 0%" data-width="80%"></div>
@@ -436,7 +451,7 @@
               <div class="skill-item">
                 <div class="skill-header">
                   <span>Optuna / Hyperparameter Tuning</span>
-                  <span>Comfortable</span>
+                  <span>Experienced with</span>
                 </div>
                 <div class="skill-bar">
                   <div class="skill-fill" style="width: 0%" data-width="75%"></div>
@@ -445,7 +460,7 @@
               <div class="skill-item">
                 <div class="skill-header">
                   <span>SHAP / Explainability</span>
-                  <span>Beginner</span>
+                  <span>Experienced with</span>
                 </div>
                 <div class="skill-bar">
                   <div class="skill-fill" style="width: 0%" data-width="70%"></div>
@@ -459,7 +474,7 @@
               <div class="skill-item">
                 <div class="skill-header">
                   <span>Python / Pandas / NumPy</span>
-                  <span>Proficient</span>
+                  <span>Comfortable with</span>
                 </div>
                 <div class="skill-bar">
                   <div class="skill-fill" style="width: 0%" data-width="85%"></div>
@@ -468,7 +483,7 @@
               <div class="skill-item">
                 <div class="skill-header">
                   <span>FastAPI / SQLAlchemy</span>
-                  <span>Intermediate</span>
+                  <span>Experienced with</span>
                 </div>
                 <div class="skill-bar">
                   <div class="skill-fill" style="width: 0%" data-width="75%"></div>
@@ -477,7 +492,7 @@
               <div class="skill-item">
                 <div class="skill-header">
                   <span>PostgreSQL / Database Design</span>
-                  <span>Comfortable</span>
+                  <span>Experienced with</span>
                 </div>
                 <div class="skill-bar">
                   <div class="skill-fill" style="width: 0%" data-width="70%"></div>
@@ -486,7 +501,7 @@
               <div class="skill-item">
                 <div class="skill-header">
                   <span>pytest / CI/CD / GitHub Actions</span>
-                  <span>Beginner</span>
+                  <span>Learning</span>
                 </div>
                 <div class="skill-bar">
                   <div class="skill-fill" style="width: 0%" data-width="65%"></div>
@@ -496,46 +511,50 @@
           </div>
         </div>
       </div>
-      
-      <!-- Bug Journal -->
-      <div class="bug-journal reveal">
-        <div class="bug-title">
-          <span>🐛</span> Bug Journal
+    </div>
+  </div>
+</section>
+
+<!-- Bug Journal -->
+<section id="bugs">
+  <div class="section-header reveal">
+    <span class="section-num">03</span>
+    <h2 class="section-title">Bug Journal</h2>
+    <span class="section-subtitle">Mistakes I've made so you don't have to</span>
+  </div>
+  
+  <div class="bug-journal reveal">
+    <div class="bug-entries">
+      <div class="bug-card">
+        <div class="bug-emoji">🎯</div>
+        <div class="bug-name">The Perfect Accuracy Trap</div>
+        <div class="bug-lesson">
+          99% accuracy on PhiUSIIL. URLSimilarityIndex scored exactly 100.0 for every legitimate URL — 
+          a label proxy, not a feature. Dataset abandoned immediately.
         </div>
-        <div class="bug-subtitle">Mistakes I've made so you don't have to — documented failures that made me a better engineer</div>
-        <div class="bug-entries">
-          <div class="bug-card">
-            <div class="bug-emoji">🎯</div>
-            <div class="bug-name">The Perfect Accuracy Trap</div>
-            <div class="bug-lesson">
-              99% accuracy on PhiUSIIL. URLSimilarityIndex scored exactly 100.0 for every legitimate URL — 
-              a label proxy, not a feature. Dataset abandoned immediately.
-            </div>
-          </div>
-          <div class="bug-card">
-            <div class="bug-emoji">⏰</div>
-            <div class="bug-name">The Time Travel Mistake</div>
-            <div class="bug-lesson">
-              Random split on fraud temporal data. Model saw the future. 
-              Now I always use time-based splits for temporal data.
-            </div>
-          </div>
-          <div class="bug-card">
-            <div class="bug-emoji">🔥</div>
-            <div class="bug-name">The Encoding Leak</div>
-            <div class="bug-lesson">
-              LOO encoding leaked future fraud stats into training. Val→test gap was 0.11. 
-              CatBoost's ordered target statistics dropped it to 0.028.
-            </div>
-          </div>
-          <div class="bug-card">
-            <div class="bug-emoji">📊</div>
-            <div class="bug-name">The Wrong Dataset Choice</div>
-            <div class="bug-lesson">
-              V1-V28 anonymized data — no lat/long, no merchant, no timestamps. 
-              No feature engineering possible. Switched to Sparkov with raw transaction fields.
-            </div>
-          </div>
+      </div>
+      <div class="bug-card">
+        <div class="bug-emoji">⏰</div>
+        <div class="bug-name">The Time Travel Mistake</div>
+        <div class="bug-lesson">
+          Random split on fraud temporal data. Model saw the future. 
+          Now I always use time-based splits for temporal data.
+        </div>
+      </div>
+      <div class="bug-card">
+        <div class="bug-emoji">🔥</div>
+        <div class="bug-name">The Encoding Leak</div>
+        <div class="bug-lesson">
+          LOO encoding leaked future fraud stats into training. Val→test gap was 0.11. 
+          CatBoost's ordered target statistics dropped it to 0.028.
+        </div>
+      </div>
+      <div class="bug-card">
+        <div class="bug-emoji">📊</div>
+        <div class="bug-name">The Wrong Dataset Choice</div>
+        <div class="bug-lesson">
+          V1-V28 anonymized data — no lat/long, no merchant, no timestamps. 
+          No feature engineering possible. Switched to Sparkov with raw transaction fields.
         </div>
       </div>
     </div>
