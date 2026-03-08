@@ -549,6 +549,7 @@ section {
 .project-card {
   background: var(--card);
   display: grid;
+  padding: 2rem;
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   overflow: hidden;
