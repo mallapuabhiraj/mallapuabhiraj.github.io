@@ -546,6 +546,13 @@ section {
   gap: 2rem;
 }
 
+.project-card.featured {
+  padding: 0;
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+}
+
 .project-card {
   background: var(--card);
   display: grid;
@@ -577,13 +584,6 @@ section {
 
 .project-card:hover::before {
   opacity: 1;
-}
-
-.project-card.featured {
-  padding: 0;
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: 2fr 1fr;
 }
 
 .card-main {
